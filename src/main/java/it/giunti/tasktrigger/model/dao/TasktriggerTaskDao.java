@@ -8,7 +8,7 @@ import javax.persistence.Query;
  
 import org.springframework.stereotype.Repository;
 
-import it.giunti.tasktrigger.model.jpa.TasktriggerTask;
+import it.giunti.tasktrigger.model.entity.TasktriggerTask;
  
 @Repository("tasktriggerTaskDao")
 public class TasktriggerTaskDao {

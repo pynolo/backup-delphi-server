@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.model.jpa;
+package it.giunti.tasktrigger.model.entity;
 
 import java.util.Date;
 
@@ -24,7 +24,7 @@ public class TasktriggerTask {
     private String taskName;
  
     @Column(name = "modified_date")
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date modifiedDate;
  
 

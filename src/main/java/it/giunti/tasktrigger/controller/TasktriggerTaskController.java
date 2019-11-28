@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.giunti.tasktrigger.model.jpa.TasktriggerTask;
+import it.giunti.tasktrigger.model.entity.TasktriggerTask;
 import it.giunti.tasktrigger.model.service.TasktriggerTaskService;
  
 @RestController
