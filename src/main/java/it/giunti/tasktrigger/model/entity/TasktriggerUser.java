@@ -12,23 +12,17 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
  
 @Entity
-@Table(name = "tasktrigger_task")
-public class TasktriggerTask {
+@Table(name = "tasktrigger_user")
+public class TasktriggerUser {
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
  
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "executable")
-    private String executable;
-    
-    @Column(name = "description")
-    private String description;
-    
+    @Column(name = "username")
+    private String username;
+ 
     @Column(name = "modified_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date modifiedDate;
@@ -42,28 +36,12 @@ public class TasktriggerTask {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getExecutable() {
-		return executable;
-	}
-
-	public void setExecutable(String executable) {
-		this.executable = executable;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Date getModifiedDate() {
@@ -76,7 +54,7 @@ public class TasktriggerTask {
 
 	@Override
     public String toString() {
-        return "TasktriggerTask [id=" + id + ", name=" + name + "]";
+        return "TasktriggerUser [id=" + id + ", taskName=" + username + "]";
     }
  
 }

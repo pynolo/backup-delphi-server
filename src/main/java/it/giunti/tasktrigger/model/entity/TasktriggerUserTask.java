@@ -12,22 +12,19 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
  
 @Entity
-@Table(name = "tasktrigger_task")
-public class TasktriggerTask {
+@Table(name = "tasktrigger_user_task")
+public class TasktriggerUserTask {
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
  
-    @Column(name = "name")
-    private String name;
+    @Column(name = "id_user")
+    private int idUser;
     
-    @Column(name = "executable")
-    private String executable;
-    
-    @Column(name = "description")
-    private String description;
+    @Column(name = "id_task")
+    private int idTask;
     
     @Column(name = "modified_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -42,28 +39,20 @@ public class TasktriggerTask {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public int getIdUser() {
+		return idUser;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
 	}
 
-	public String getExecutable() {
-		return executable;
+	public int getIdTask() {
+		return idTask;
 	}
 
-	public void setExecutable(String executable) {
-		this.executable = executable;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setIdTask(int idTask) {
+		this.idTask = idTask;
 	}
 
 	public Date getModifiedDate() {
@@ -76,7 +65,7 @@ public class TasktriggerTask {
 
 	@Override
     public String toString() {
-        return "TasktriggerTask [id=" + id + ", name=" + name + "]";
+        return "TasktriggerUserTask [id=" + id + "]";
     }
  
 }

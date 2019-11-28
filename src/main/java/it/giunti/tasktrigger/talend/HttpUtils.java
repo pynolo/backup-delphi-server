@@ -18,7 +18,6 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.params.BasicHttpParams;
 
 public class HttpUtils {
 
@@ -55,39 +54,5 @@ public class HttpUtils {
 				.build();
 		
 		return httpclient;
-//
-//		String BU_API_URL = "https://xxxx:300yyy/springController/v2.0/getUnits?team=team1";
-//		BufferedReader rd = null;
-//		long startTime = System.nanoTime();
-//		long endTime = 0;
-//		String teamCode = "team1";
-//
-//		// Invoke Rest API
-//
-//		try {
-//			HttpGet getRequest = new HttpGet(BU_API_URL);
-//			getRequest.addHeader("content-type", "application/json");
-//			getRequest.addHeader("Username", "yyy@gmail.com");
-//			getRequest.addHeader("Apikey", "40XXXXXXa");
-//			BasicHttpParams params = new BasicHttpParams();
-//			params.setParameter("team", teamCode);
-//			getRequest.setParams(params);
-//			CloseableHttpResponse closeableResponse = httpclient.execute(getRequest);
-//			endTime = System.nanoTime();
-//			int status = closeableResponse.getStatusLine().getStatusCode();
-//			System.out.println("Response Code : " + status);
-//			rd = new BufferedReader(new InputStreamReader(closeableResponse.getEntity().getContent()));
-//			StringBuilder result = new StringBuilder();
-//			String line = "";
-//			while ((line = rd.readLine()) != null) {
-//				result.append(line);
-//			}
-//			System.out.println("Response result : " + result.toString());
-//		} catch (IOException ioe) {
-//			ioe.printStackTrace();
-//		} finally {
-//			if (rd != null)
-//				rd.close();
-//		}
 	}
 }
