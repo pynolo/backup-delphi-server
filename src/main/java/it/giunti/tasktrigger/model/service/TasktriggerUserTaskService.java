@@ -19,18 +19,23 @@ public class TasktriggerUserTaskService {
 	private TasktriggerUserTaskDao utDao;
 
 	@Transactional
-	public TasktriggerUserTask getTaskById(int id) {
+	public TasktriggerUserTask getUserTaskById(int id) {
 		return utDao.selectUserTaskById(id);
 	}
 
 	@Transactional
-	public void addUserTask(TasktriggerUserTask task) {
-		utDao.insertUserTask(task);
+	public TasktriggerUserTask getUserTaskByUserTask(int idUser, int idTask) {
+		return utDao.selectUserTaskByUserTask(idUser, idTask);
+	}
+	
+	@Transactional
+	public void addUserTask(int idUser, int idTask) {
+		utDao.insertUserTask(idUser, idTask);
 	}
 
 	@Transactional
-	public void modifyUserTask(TasktriggerUserTask task) {
-		utDao.updateUserTask(task);
+	public void removeUserTask(int id) {
+		utDao.deleteUserTask(id);
 	}
 
 	@Transactional
@@ -39,8 +44,8 @@ public class TasktriggerUserTaskService {
 	}
 
 	@Transactional
-	public void removeUserTask(int id) {
-		utDao.deleteUserTask(id);
+	public List<TasktriggerUserTask> getAllUserTasksByUser(int idUser) {
+		return utDao.selectAllUserTasksByUser(idUser);
 	}
 
 }

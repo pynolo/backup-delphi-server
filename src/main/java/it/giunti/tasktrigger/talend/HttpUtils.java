@@ -9,19 +9,21 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
 public class HttpUtils {
 
-	public static String executeRequest(String url, String token) throws IOException {
+	public static String executeGet(String url, String token) throws IOException {
 		StringBuilder result = new StringBuilder();
 		
 		CloseableHttpClient httpClient = getCloseableHttpClient();
@@ -29,6 +31,24 @@ public class HttpUtils {
 		getRequest.addHeader("Accept", "application/json");
 		getRequest.addHeader("Authorization", "Bearer "+token);
 		CloseableHttpResponse closeableResponse = httpClient.execute(getRequest);
+		BufferedReader rd = new BufferedReader(new InputStreamReader(closeableResponse.getEntity().getContent()));
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+		}
+		return result.toString();	
+	}
+	
+	public static String executePost(String url, String token, String jsonBody) throws IOException {
+		StringBuilder result = new StringBuilder();
+		
+		CloseableHttpClient httpClient = getCloseableHttpClient();
+		HttpPost postRequest = new HttpPost(url);
+		postRequest.addHeader("Accept", "application/json");
+		postRequest.addHeader("Authorization", "Bearer "+token);
+		StringEntity stringEntity = new StringEntity(jsonBody);
+		postRequest.setEntity(stringEntity);
+		CloseableHttpResponse closeableResponse = httpClient.execute(postRequest);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(closeableResponse.getEntity().getContent()));
 		String line = "";
 		while ((line = rd.readLine()) != null) {

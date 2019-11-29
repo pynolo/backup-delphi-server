@@ -20,18 +20,32 @@ public class TasktriggerUserTaskDao {
         return entityManager.find(TasktriggerUserTask.class, id);
     }
  
+	@SuppressWarnings("unchecked")
+	public TasktriggerUserTask selectUserTaskByUserTask(int idUser, int idTask) {
+		Query query = entityManager.createQuery(
+				"from TasktriggerUserTask as ut where "+
+				"ut.idUser = :id1 and "+
+				"ut.idTask = :id2")
+				.setParameter("id1", idUser)
+				.setParameter("id2", idTask);
+		List<TasktriggerUserTask> list = (List<TasktriggerUserTask>) query.getResultList();
+		if (list != null) {
+			if (list.size() > 0) return list.get(0);
+		}
+		return null;
+	}
+
     public void insertUserTask(TasktriggerUserTask ut) {
         entityManager.persist(ut);
     }
- 
-    public void updateUserTask(TasktriggerUserTask ut) {
-    	TasktriggerUserTask utToUpdate = selectUserTaskById(ut.getId());
-    	utToUpdate.setIdUser(ut.getIdUser());
-    	utToUpdate.setIdTask(ut.getIdTask());
-    	utToUpdate.setModifiedDate(ut.getModifiedDate());
-        entityManager.flush();
+    
+    public void insertUserTask(int idUser, int idTask) {
+    	TasktriggerUserTask ut = new TasktriggerUserTask();
+    	ut.setIdUser(idUser);
+    	ut.setIdTask(idTask);
+        entityManager.persist(ut);
     }
- 
+
     public void deleteUserTask(int id) {
         entityManager.remove(selectUserTaskById(id));
     }
@@ -41,5 +55,14 @@ public class TasktriggerUserTaskDao {
         Query query = entityManager.createQuery("from TasktriggerUserTask as ut order by ut.id");
         return (List<TasktriggerUserTask>) query.getResultList();
     }
- 
+
+    @SuppressWarnings("unchecked")
+    public List<TasktriggerUserTask> selectAllUserTasksByUser(int idUser) {
+        Query query = entityManager.createQuery(
+        		"from TasktriggerUserTask as ut where "+
+        		"ut.idUser = :id1 "+
+        		"order by ut.id")
+        		.setParameter(":id1", idUser);
+        return (List<TasktriggerUserTask>) query.getResultList();
+    }
 }
