@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.giunti.tasktrigger.model.entity.TasktriggerTask;
-import it.giunti.tasktrigger.model.service.TasktriggerTaskService;
+import it.giunti.tasktrigger.service.TasktriggerTaskService;
  
 @RestController
 public class TasktriggerTaskController {

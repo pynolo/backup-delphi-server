@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.giunti.tasktrigger.model.entity.TasktriggerTask;
-import it.giunti.tasktrigger.model.service.TasktriggerTaskService;
+import it.giunti.tasktrigger.service.TasktriggerTaskService;
 
 @Component
 public class TaskUpdater {

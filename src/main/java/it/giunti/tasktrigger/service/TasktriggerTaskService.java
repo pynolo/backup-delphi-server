@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.model.service;
+package it.giunti.tasktrigger.service;
 
 import java.util.List;
 
