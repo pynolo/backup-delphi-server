@@ -19,7 +19,7 @@ public class TasktriggerUserService {
 	private TasktriggerUserDao userDao;
 
 	@Transactional
-	public TasktriggerUser getUserById(long id) {
+	public TasktriggerUser getUserById(int id) {
 		return userDao.selectUserById(id);
 	}
 
@@ -39,7 +39,7 @@ public class TasktriggerUserService {
 	}
 
 	@Transactional
-	public void removeUser(long id) {
+	public void removeUser(int id) {
 		userDao.deleteUser(id);
 	}
 

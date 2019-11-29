@@ -4,6 +4,11 @@ CREATE TABLE `tasktrigger_task` (
   `name` varchar(256) NOT NULL,
   `executable` varchar(256) NOT NULL,
   `description` varchar(256) NOT NULL,
+  `workspace_id` varchar(256) NOT NULL,
+  `workspace_name` varchar(256) NOT NULL,
+  `environment_id` varchar(256) NOT NULL,
+  `environment_name` varchar(256) NOT NULL,
+  `available` bit NOT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;

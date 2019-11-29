@@ -19,7 +19,7 @@ public class TasktriggerUserTaskService {
 	private TasktriggerUserTaskDao utDao;
 
 	@Transactional
-	public TasktriggerUserTask getTaskById(long id) {
+	public TasktriggerUserTask getTaskById(int id) {
 		return utDao.selectUserTaskById(id);
 	}
 
@@ -39,7 +39,7 @@ public class TasktriggerUserTaskService {
 	}
 
 	@Transactional
-	public void removeUserTask(long id) {
+	public void removeUserTask(int id) {
 		utDao.deleteUserTask(id);
 	}
 

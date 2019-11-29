@@ -16,7 +16,7 @@ public class TasktriggerTaskDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public TasktriggerTask selectTaskById(long id) {
+	public TasktriggerTask selectTaskById(int id) {
 		return entityManager.find(TasktriggerTask.class, id);
 	}
 
@@ -28,11 +28,16 @@ public class TasktriggerTaskDao {
 		TasktriggerTask taskToUpdate = selectTaskById(task.getId());
 		taskToUpdate.setName(task.getName());
 		taskToUpdate.setDescription(task.getDescription());
+		taskToUpdate.setWorkspaceId(task.getWorkspaceId());
+		taskToUpdate.setWorkspaceName(task.getWorkspaceName());
+		taskToUpdate.setEnvironamentId(task.getEnvironamentId());
+		taskToUpdate.setEnvironmentName(task.getEnvironmentName());
+		taskToUpdate.setAvailable(task.isAvailable());
 		taskToUpdate.setExecutable(task.getExecutable());
 		entityManager.flush();
 	}
 
-	public void deleteTask(long id) {
+	public void deleteTask(int id) {
 		entityManager.remove(selectTaskById(id));
 	}
 

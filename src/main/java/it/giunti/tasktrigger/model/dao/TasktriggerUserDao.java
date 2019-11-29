@@ -16,7 +16,7 @@ public class TasktriggerUserDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public TasktriggerUser selectUserById(long id) {
+	public TasktriggerUser selectUserById(int id) {
 		return entityManager.find(TasktriggerUser.class, id);
 	}
 
@@ -30,7 +30,7 @@ public class TasktriggerUserDao {
 		entityManager.flush();
 	}
 
-	public void deleteUser(long id) {
+	public void deleteUser(int id) {
 		entityManager.remove(selectUserById(id));
 	}
 

@@ -29,10 +29,24 @@ public class TasktriggerTask {
     @Column(name = "description")
     private String description;
     
+    @Column(name = "workspace_id")
+    private String workspaceId;
+    
+    @Column(name = "workspace_name")
+    private String workspaceName;
+    
+    @Column(name = "environment_id")
+    private String environamentId;
+    
+    @Column(name = "environment_name")
+    private String environmentName;
+    
+    @Column(name = "available")
+    private boolean available;
+    
     @Column(name = "modified_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date modifiedDate;
- 
 
     public int getId() {
 		return id;
@@ -64,6 +78,46 @@ public class TasktriggerTask {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+
+	public String getWorkspaceId() {
+		return workspaceId;
+	}
+
+	public void setWorkspaceId(String workspaceId) {
+		this.workspaceId = workspaceId;
+	}
+
+	public String getWorkspaceName() {
+		return workspaceName;
+	}
+
+	public void setWorkspaceName(String workspaceName) {
+		this.workspaceName = workspaceName;
+	}
+
+	public String getEnvironamentId() {
+		return environamentId;
+	}
+
+	public void setEnvironamentId(String environamentId) {
+		this.environamentId = environamentId;
+	}
+
+	public String getEnvironmentName() {
+		return environmentName;
+	}
+
+	public void setEnvironmentName(String environmentName) {
+		this.environmentName = environmentName;
 	}
 
 	public Date getModifiedDate() {

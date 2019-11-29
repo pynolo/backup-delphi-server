@@ -35,12 +35,12 @@ public class TasktriggerTaskController {
     }
  
     @DeleteMapping("/api/removetask/{id}")
-    public void removeTask(@PathVariable(value = "id") long id) {
+    public void removeTask(@PathVariable(value = "id") int id) {
     	taskService.removeTask(id);
     }
  
     @GetMapping("/api/viewsingletask/{id}")
-    public TasktriggerTask viewTaskById(@PathVariable(value = "id") long id) {
+    public TasktriggerTask viewTaskById(@PathVariable(value = "id") int id) {
         return taskService.getTaskById(id);
     }
  

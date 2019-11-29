@@ -35,12 +35,12 @@ public class TasktriggerUserController {
     }
  
     @DeleteMapping("/api/removeuser/{id}")
-    public void removeUser(@PathVariable(value = "id") long id) {
+    public void removeUser(@PathVariable(value = "id") int id) {
     	userService.removeUser(id);
     }
  
     @GetMapping("/api/viewsingleuser/{id}")
-    public TasktriggerUser viewUserById(@PathVariable(value = "id") long id) {
+    public TasktriggerUser viewUserById(@PathVariable(value = "id") int id) {
         return userService.getUserById(id);
     }
  

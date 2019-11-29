@@ -9,8 +9,9 @@ import it.giunti.tasktrigger.TasktriggerConfiguration;
 
 @Component
 public class TalendApi {
+	
 	@Autowired
-	public TasktriggerConfiguration config;
+	TasktriggerConfiguration config;
 	
 	public String getExecutables() throws IOException {
 		String urlPath="/executables";
