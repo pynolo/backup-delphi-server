@@ -24,6 +24,11 @@ public class TasktriggerUserService {
 	}
 
 	@Transactional
+	public TasktriggerUser getUserByUsername(String username) {
+		return userDao.selectUserByUsername(username);
+	}
+	
+	@Transactional
 	public void addUser(TasktriggerUser task) {
 		userDao.insertUser(task);
 	}

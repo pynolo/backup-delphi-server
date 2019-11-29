@@ -18,7 +18,8 @@ CREATE TABLE `tasktrigger_user` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(256) NOT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `ix_username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
 
 DROP TABLE IF EXISTS `tasktrigger_user_task`;

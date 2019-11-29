@@ -20,6 +20,19 @@ public class TasktriggerUserDao {
 		return entityManager.find(TasktriggerUser.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	public TasktriggerUser selectUserByUsername(String username) {
+		Query query = entityManager.createQuery(
+				"from TasktriggerUser as user where "+
+				"user.username like :s1")
+				.setParameter("s1", username);
+		List<TasktriggerUser> list = (List<TasktriggerUser>) query.getResultList();
+		if (list != null) {
+			if (list.size() > 0) return list.get(0);
+		}
+		return null;
+	}
+	
 	public void insertUser(TasktriggerUser user) {
 		entityManager.persist(user);
 	}
