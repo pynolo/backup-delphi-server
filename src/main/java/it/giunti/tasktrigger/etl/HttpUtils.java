@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.talend;
+package it.giunti.tasktrigger.etl;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.talend;
+package it.giunti.tasktrigger.etl;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import it.giunti.tasktrigger.TasktriggerConfiguration;
 
 @Component
-public class TalendApi {
+public class EtlApi {
 	
 	@Autowired
 	TasktriggerConfiguration config;

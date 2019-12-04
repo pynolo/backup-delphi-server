@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
-import it.giunti.tasktrigger.talend.TaskUpdater;
+import it.giunti.tasktrigger.etl.TaskUpdater;
  
 @SpringBootApplication
 public class TasktriggerApplication {

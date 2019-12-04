@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.talend;
+package it.giunti.tasktrigger.etl;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -22,7 +22,7 @@ import it.giunti.tasktrigger.service.TasktriggerTaskService;
 public class TaskUpdater {
 	
 	@Autowired
-	TalendApi talendApi;
+	EtlApi talendApi;
 	@Autowired
 	TasktriggerTaskService taskService;
 	
