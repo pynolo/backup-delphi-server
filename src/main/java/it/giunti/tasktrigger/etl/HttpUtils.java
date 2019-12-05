@@ -29,6 +29,7 @@ public class HttpUtils {
 		CloseableHttpClient httpClient = getCloseableHttpClient();
 		HttpGet getRequest = new HttpGet(url);
 		getRequest.addHeader("Accept", "application/json");
+		getRequest.addHeader("Content-Type", "application/json");
 		getRequest.addHeader("Authorization", "Bearer "+token);
 		CloseableHttpResponse closeableResponse = httpClient.execute(getRequest);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(closeableResponse.getEntity().getContent()));
@@ -45,6 +46,7 @@ public class HttpUtils {
 		CloseableHttpClient httpClient = getCloseableHttpClient();
 		HttpPost postRequest = new HttpPost(url);
 		postRequest.addHeader("Accept", "application/json");
+		postRequest.addHeader("Content-Type", "application/json");
 		postRequest.addHeader("Authorization", "Bearer "+token);
 		StringEntity stringEntity = new StringEntity(jsonBody);
 		postRequest.setEntity(stringEntity);
@@ -54,6 +56,7 @@ public class HttpUtils {
 		while ((line = rd.readLine()) != null) {
 			result.append(line);
 		}
+		closeableResponse.close();
 		return result.toString();	
 	}
 	

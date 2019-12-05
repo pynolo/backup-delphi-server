@@ -15,7 +15,7 @@ import it.giunti.tasktrigger.etl.EtlApi;
 import it.giunti.tasktrigger.etl.EtlExecution;
 import it.giunti.tasktrigger.etl.TaskUpdater;
 
-@Service("talendService")
+@Service("etlService")
 public class EtlService {
 
 	@Autowired
