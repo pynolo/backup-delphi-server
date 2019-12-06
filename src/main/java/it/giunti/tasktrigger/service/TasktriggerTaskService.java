@@ -22,7 +22,12 @@ public class TasktriggerTaskService {
     public TasktriggerTask getTaskById(int id) {
         return taskDao.selectTaskById(id);
     }
- 
+    
+    @Transactional
+    public TasktriggerTask getTaskByName(String name) {
+        return taskDao.selectTaskByName(name);
+    }
+    
     @Transactional
     public void addTask(TasktriggerTask task) {
     	taskDao.insertTask(task);

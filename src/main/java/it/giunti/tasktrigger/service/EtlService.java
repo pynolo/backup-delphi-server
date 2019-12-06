@@ -6,14 +6,18 @@ import java.io.StringReader;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import it.giunti.tasktrigger.EtlException;
 import it.giunti.tasktrigger.etl.EtlApi;
 import it.giunti.tasktrigger.etl.EtlExecution;
 import it.giunti.tasktrigger.etl.TaskUpdater;
+import it.giunti.tasktrigger.model.dao.TasktriggerTaskDao;
+import it.giunti.tasktrigger.model.entity.TasktriggerTask;
 
 @Service("etlService")
 public class EtlService {
@@ -22,8 +26,11 @@ public class EtlService {
 	private EtlApi talendApi;
 	@Autowired
 	private TaskUpdater taskUpdater;
-
-	public void launchTaskUpdater() throws EtlException {
+    @Autowired
+    @Qualifier("tasktriggerTaskDao")
+    private TasktriggerTaskDao taskDao;
+    
+	public void updateTasks() throws EtlException {
 		try {
 			taskUpdater.updateTasks();
 		} catch (IOException e) {
@@ -31,7 +38,7 @@ public class EtlService {
 		}
 	}
 
-	public EtlExecution launchExecution(String executable) throws EtlException {
+	public EtlExecution executeById(String executable) throws EtlException {
 		String jsonBody = "{ \"executable\": \"" + executable + "\" }";
 		try {
 			String responseJson = talendApi.postExecutions(jsonBody);
@@ -45,6 +52,12 @@ public class EtlService {
 		}
 	}
 
+	@Transactional
+	public EtlExecution executeByName(String name) throws EtlException {
+		TasktriggerTask task = taskDao.selectTaskByName(name);
+		return executeById(task.getExecutable());
+	}
+	
 	public EtlExecution findExecution(String executionId) throws EtlException {
 		try {
 			String responseJson = talendApi.getExecutions(executionId);

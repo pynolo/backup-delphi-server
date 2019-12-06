@@ -22,9 +22,9 @@ import org.springframework.stereotype.Service;
 import it.giunti.tasktrigger.model.dao.TasktriggerUserDao;
 import it.giunti.tasktrigger.model.entity.TasktriggerUser;
 
-@Service("ldapService")
-public class LdapService {
-	private static final Logger LOG = LoggerFactory.getLogger(LdapService.class);
+@Service("authService")
+public class AuthService {
+	private static final Logger LOG = LoggerFactory.getLogger(AuthService.class);
 	
 	private static final String LDAP_HOST = "ldap.intranet.giunti.it";
 	private static final String LDAP_DOMAIN = "giunti.it";

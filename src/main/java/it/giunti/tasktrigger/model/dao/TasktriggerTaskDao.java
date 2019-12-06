@@ -19,7 +19,20 @@ public class TasktriggerTaskDao {
 	public TasktriggerTask selectTaskById(int id) {
 		return entityManager.find(TasktriggerTask.class, id);
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public TasktriggerTask selectTaskByName(String name) {
+		Query query = entityManager.createQuery(
+				"from TasktriggerTask as task where "+
+				"task.name like :s1")
+				.setParameter("s1", name);
+		List<TasktriggerTask> list = (List<TasktriggerTask>) query.getResultList();
+		if (list != null) {
+			if (list.size() > 0) return list.get(0);
+		}
+		return null;
+	}
+	
 	public void insertTask(TasktriggerTask task) {
 		entityManager.persist(task);
 	}

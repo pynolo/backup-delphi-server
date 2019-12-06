@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,20 +26,31 @@ public class EtlController {
     @Qualifier("etlService")
     private EtlService etlService;
     
-    @PostMapping("/api/launchtaskupdater")
-    public void launchTaskUpdater() throws ControllerException {
+    @PostMapping("/api/updatetasks")
+    public void updateTasks() throws ControllerException {
     	try {
-			etlService.launchTaskUpdater();
+			etlService.updateTasks();
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
     }
     
-    @PostMapping("/api/launchexecution")
-    public EtlExecution launchExecution(@Valid @RequestBody LinkedHashMap<String, String> paramsMap) throws ControllerException {
+    @PostMapping("/api/executebyid")
+    public EtlExecution executeById(@Valid @RequestBody LinkedHashMap<String, String> paramsMap) throws ControllerException {
     	try {
     		EtlExecution etlExecution;
-			etlExecution = etlService.launchExecution(paramsMap.get("executable"));
+			etlExecution = etlService.executeById(paramsMap.get("executable"));
+			return etlExecution;
+		} catch (EtlException e) {
+			throw new ControllerException(e.getMessage(), e);
+		}
+    }
+    
+    @GetMapping("/api/executebyname/{name}")
+    public EtlExecution executeByName(@PathVariable(value = "name") String name) throws ControllerException {
+    	try {
+    		EtlExecution etlExecution;
+			etlExecution = etlService.executeByName(name);
 			return etlExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
