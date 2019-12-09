@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.event.EventListener;
 
 import it.giunti.delphi.etl.TaskUpdater;
  
 @SpringBootApplication
-public class DelphiApplication {
+public class DelphiApplication extends SpringBootServletInitializer {
 	
 	private static Logger LOG = LoggerFactory.getLogger(DelphiApplication.class);
 

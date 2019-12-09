@@ -1,5 +1,6 @@
 <html>
 <body>
-<h2>Hello World!</h2>
+<h2>Delphi server</h2>
+Chiamare l'endpoint desiderato per accedere alle API
 </body>
 </html>

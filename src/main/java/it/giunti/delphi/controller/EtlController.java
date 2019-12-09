@@ -22,50 +22,52 @@ import it.giunti.delphi.service.EtlService;
 @CrossOrigin(origins = "*")
 public class EtlController {
 
-    @Autowired
-    @Qualifier("etlService")
-    private EtlService etlService;
-    
-    @PostMapping("/api/updatetasks")
-    public void updateTasks() throws ControllerException {
-    	try {
+	@Autowired
+	@Qualifier("etlService")
+	private EtlService etlService;
+
+	@PostMapping("/api/updatetasks")
+	public void updateTasks() throws ControllerException {
+		try {
 			etlService.updateTasks();
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
-    }
-    
-    @PostMapping("/api/executebyid")
-    public EtlExecution executeById(@Valid @RequestBody LinkedHashMap<String, String> paramsMap) throws ControllerException {
-    	try {
-    		EtlExecution etlExecution;
+	}
+
+	@PostMapping("/api/executebyid")
+	public EtlExecution executeById(@Valid @RequestBody LinkedHashMap<String, String> paramsMap)
+			throws ControllerException {
+		try {
+			EtlExecution etlExecution;
 			etlExecution = etlService.executeById(paramsMap.get("executable"));
 			return etlExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
-    }
-    
-    @GetMapping("/api/executebyname/{name}")
-    public EtlExecution executeByName(@PathVariable(value = "name") String name) throws ControllerException {
-    	try {
-    		EtlExecution etlExecution;
+	}
+
+	@GetMapping("/api/executebyname/{name}")
+	public EtlExecution executeByName(@PathVariable(value = "name") String name) throws ControllerException {
+		try {
+			EtlExecution etlExecution;
 			etlExecution = etlService.executeByName(name);
 			return etlExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
-    }
-    
-    @PostMapping("/api/findexecution")
-    public EtlExecution findExecution(@Valid @RequestBody LinkedHashMap<String, String> paramsMap) throws ControllerException {
-    	String executionId = paramsMap.get("executionId");
-    	try {
-    		EtlExecution etlExecution;
+	}
+
+	@PostMapping("/api/findexecution")
+	public EtlExecution findExecution(@Valid @RequestBody LinkedHashMap<String, String> paramsMap)
+			throws ControllerException {
+		String executionId = paramsMap.get("executionId");
+		try {
+			EtlExecution etlExecution;
 			etlExecution = etlService.findExecution(executionId);
 			return etlExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
-    }
+	}
 }
