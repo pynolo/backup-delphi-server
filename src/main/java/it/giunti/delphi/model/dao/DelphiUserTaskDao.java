@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.model.dao;
+package it.giunti.delphi.model.dao;
 
 import java.util.List;
 
@@ -8,39 +8,39 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import it.giunti.tasktrigger.model.entity.TasktriggerUserTask;
+import it.giunti.delphi.model.entity.DelphiUserTask;
  
-@Repository("tasktriggerUserTaskDao")
-public class TasktriggerUserTaskDao {
+@Repository("delphiUserTaskDao")
+public class DelphiUserTaskDao {
  
     @PersistenceContext
     private EntityManager entityManager;
  
-    public TasktriggerUserTask selectUserTaskById(int id) {
-        return entityManager.find(TasktriggerUserTask.class, id);
+    public DelphiUserTask selectUserTaskById(int id) {
+        return entityManager.find(DelphiUserTask.class, id);
     }
  
 	@SuppressWarnings("unchecked")
-	public TasktriggerUserTask selectUserTaskByUserTask(int idUser, int idTask) {
+	public DelphiUserTask selectUserTaskByUserTask(int idUser, int idTask) {
 		Query query = entityManager.createQuery(
-				"from TasktriggerUserTask as ut where "+
+				"from DelphiUserTask as ut where "+
 				"ut.idUser = :id1 and "+
 				"ut.idTask = :id2")
 				.setParameter("id1", idUser)
 				.setParameter("id2", idTask);
-		List<TasktriggerUserTask> list = (List<TasktriggerUserTask>) query.getResultList();
+		List<DelphiUserTask> list = (List<DelphiUserTask>) query.getResultList();
 		if (list != null) {
 			if (list.size() > 0) return list.get(0);
 		}
 		return null;
 	}
 
-    public void insertUserTask(TasktriggerUserTask ut) {
+    public void insertUserTask(DelphiUserTask ut) {
         entityManager.persist(ut);
     }
     
     public void insertUserTask(int idUser, int idTask) {
-    	TasktriggerUserTask ut = new TasktriggerUserTask();
+    	DelphiUserTask ut = new DelphiUserTask();
     	ut.setIdUser(idUser);
     	ut.setIdTask(idTask);
         entityManager.persist(ut);
@@ -51,18 +51,18 @@ public class TasktriggerUserTaskDao {
     }
  
     @SuppressWarnings("unchecked")
-    public List<TasktriggerUserTask> selectAllUserTasks() {
-        Query query = entityManager.createQuery("from TasktriggerUserTask as ut order by ut.id");
-        return (List<TasktriggerUserTask>) query.getResultList();
+    public List<DelphiUserTask> selectAllUserTasks() {
+        Query query = entityManager.createQuery("from DelphiUserTask as ut order by ut.id");
+        return (List<DelphiUserTask>) query.getResultList();
     }
 
     @SuppressWarnings("unchecked")
-    public List<TasktriggerUserTask> selectAllUserTasksByUser(int idUser) {
+    public List<DelphiUserTask> selectAllUserTasksByUser(int idUser) {
         Query query = entityManager.createQuery(
-        		"from TasktriggerUserTask as ut where "+
+        		"from DelphiUserTask as ut where "+
         		"ut.idUser = :id1 "+
         		"order by ut.id")
         		.setParameter(":id1", idUser);
-        return (List<TasktriggerUserTask>) query.getResultList();
+        return (List<DelphiUserTask>) query.getResultList();
     }
 }

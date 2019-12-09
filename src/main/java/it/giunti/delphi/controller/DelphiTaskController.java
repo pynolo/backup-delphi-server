@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.controller;
+package it.giunti.delphi.controller;
 
 import java.util.List;
 
@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.giunti.tasktrigger.model.entity.TasktriggerTask;
-import it.giunti.tasktrigger.service.TasktriggerTaskService;
+import it.giunti.delphi.model.entity.DelphiTask;
+import it.giunti.delphi.service.DelphiTaskService;
  
 @RestController
 @CrossOrigin(origins = "*")
-public class TasktriggerTaskController {
+public class DelphiTaskController {
  
     @Autowired
-    @Qualifier("tasktriggerTaskService")
-    private TasktriggerTaskService taskService;
+    @Qualifier("delphiTaskService")
+    private DelphiTaskService taskService;
  
     @PostMapping("/api/createtask")
-    public void createNewTask(@Valid @RequestBody TasktriggerTask task) {
+    public void createNewTask(@Valid @RequestBody DelphiTask task) {
     	taskService.addTask(task);
     }
  
     @PutMapping("/api/changetask")
-    public void changeExistingTask(@Valid @RequestBody TasktriggerTask task) {
+    public void changeExistingTask(@Valid @RequestBody DelphiTask task) {
     	taskService.modifyTask(task);
     }
  
@@ -42,12 +42,12 @@ public class TasktriggerTaskController {
     }
  
     @GetMapping("/api/viewsingletask/{id}")
-    public TasktriggerTask viewTaskById(@PathVariable(value = "id") int id) {
+    public DelphiTask viewTaskById(@PathVariable(value = "id") int id) {
         return taskService.getTaskById(id);
     }
  
     @GetMapping("/api/viewalltasks")
-    public List<TasktriggerTask> viewAllTasks() {
+    public List<DelphiTask> viewAllTasks() {
         return taskService.getAllTasks();
     }
  

@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger;
+package it.giunti.delphi;
 
 import java.io.IOException;
 
@@ -10,18 +10,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
-import it.giunti.tasktrigger.etl.TaskUpdater;
+import it.giunti.delphi.etl.TaskUpdater;
  
 @SpringBootApplication
-public class TasktriggerApplication {
+public class DelphiApplication {
 	
-	private static Logger LOG = LoggerFactory.getLogger(TasktriggerApplication.class);
+	private static Logger LOG = LoggerFactory.getLogger(DelphiApplication.class);
 
 	@Autowired
 	TaskUpdater taskUpdater;
 	
     public static void main(String[] args) {
-        SpringApplication.run(TasktriggerApplication.class, args);
+        SpringApplication.run(DelphiApplication.class, args);
     }
     
     @EventListener(ApplicationReadyEvent.class)

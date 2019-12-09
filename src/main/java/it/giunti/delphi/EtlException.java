@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger;
+package it.giunti.delphi;
 
 public class EtlException extends Exception {
 	private static final long serialVersionUID = -6551010770835665190L;

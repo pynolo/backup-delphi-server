@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.model.dao;
+package it.giunti.delphi.model.dao;
 
 import java.util.List;
 
@@ -8,37 +8,37 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import it.giunti.tasktrigger.model.entity.TasktriggerTask;
+import it.giunti.delphi.model.entity.DelphiTask;
 
-@Repository("tasktriggerTaskDao")
-public class TasktriggerTaskDao {
+@Repository("delphiTaskDao")
+public class DelphiTaskDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public TasktriggerTask selectTaskById(int id) {
-		return entityManager.find(TasktriggerTask.class, id);
+	public DelphiTask selectTaskById(int id) {
+		return entityManager.find(DelphiTask.class, id);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public TasktriggerTask selectTaskByName(String name) {
+	public DelphiTask selectTaskByName(String name) {
 		Query query = entityManager.createQuery(
-				"from TasktriggerTask as task where "+
+				"from DelphiTask as task where "+
 				"task.name like :s1")
 				.setParameter("s1", name);
-		List<TasktriggerTask> list = (List<TasktriggerTask>) query.getResultList();
+		List<DelphiTask> list = (List<DelphiTask>) query.getResultList();
 		if (list != null) {
 			if (list.size() > 0) return list.get(0);
 		}
 		return null;
 	}
 	
-	public void insertTask(TasktriggerTask task) {
+	public void insertTask(DelphiTask task) {
 		entityManager.persist(task);
 	}
 
-	public void updateTask(TasktriggerTask task) {
-		TasktriggerTask taskToUpdate = selectTaskById(task.getId());
+	public void updateTask(DelphiTask task) {
+		DelphiTask taskToUpdate = selectTaskById(task.getId());
 		taskToUpdate.setName(task.getName());
 		taskToUpdate.setDescription(task.getDescription());
 		taskToUpdate.setWorkspaceId(task.getWorkspaceId());
@@ -55,9 +55,9 @@ public class TasktriggerTaskDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<TasktriggerTask> selectAllTasks() {
-		Query query = entityManager.createQuery("from TasktriggerTask as task order by task.id");
-		return (List<TasktriggerTask>) query.getResultList();
+	public List<DelphiTask> selectAllTasks() {
+		Query query = entityManager.createQuery("from DelphiTask as task order by task.id");
+		return (List<DelphiTask>) query.getResultList();
 	}
 
 }

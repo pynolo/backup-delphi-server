@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.controller;
+package it.giunti.delphi.controller;
 
 import java.util.LinkedHashMap;
 
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.giunti.tasktrigger.ControllerException;
-import it.giunti.tasktrigger.EtlException;
-import it.giunti.tasktrigger.etl.EtlExecution;
-import it.giunti.tasktrigger.service.EtlService;
+import it.giunti.delphi.ControllerException;
+import it.giunti.delphi.EtlException;
+import it.giunti.delphi.etl.EtlExecution;
+import it.giunti.delphi.service.EtlService;
 
 @RestController
 @CrossOrigin(origins = "*")

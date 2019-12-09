@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `tasktrigger_task`;
-CREATE TABLE `tasktrigger_task` (
+DROP TABLE IF EXISTS `delphi_task`;
+CREATE TABLE `delphi_task` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(256) NOT NULL,
   `executable` varchar(256) NOT NULL,
@@ -13,8 +13,8 @@ CREATE TABLE `tasktrigger_task` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
 
-DROP TABLE IF EXISTS `tasktrigger_user`;
-CREATE TABLE `tasktrigger_user` (
+DROP TABLE IF EXISTS `delphi_user`;
+CREATE TABLE `delphi_user` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(256) NOT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -22,8 +22,8 @@ CREATE TABLE `tasktrigger_user` (
   UNIQUE KEY `ix_username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
 
-DROP TABLE IF EXISTS `tasktrigger_user_task`;
-CREATE TABLE `tasktrigger_user_task` (
+DROP TABLE IF EXISTS `delphi_user_task`;
+CREATE TABLE `delphi_user_task` (
   `id` int(11) NOT NULL auto_increment,
   `id_user` int(11) NOT NULL,
   `id_task` int(11) NOT NULL,

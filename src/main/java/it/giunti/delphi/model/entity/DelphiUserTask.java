@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.model.entity;
+package it.giunti.delphi.model.entity;
 
 import java.util.Date;
 
@@ -12,17 +12,20 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
  
 @Entity
-@Table(name = "tasktrigger_user")
-public class TasktriggerUser {
+@Table(name = "delphi_user_task")
+public class DelphiUserTask {
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
  
-    @Column(name = "username")
-    private String username;
- 
+    @Column(name = "id_user")
+    private int idUser;
+    
+    @Column(name = "id_task")
+    private int idTask;
+    
     @Column(name = "modified_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date modifiedDate;
@@ -36,12 +39,20 @@ public class TasktriggerUser {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public int getIdUser() {
+		return idUser;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
+	}
+
+	public int getIdTask() {
+		return idTask;
+	}
+
+	public void setIdTask(int idTask) {
+		this.idTask = idTask;
 	}
 
 	public Date getModifiedDate() {
@@ -54,7 +65,7 @@ public class TasktriggerUser {
 
 	@Override
     public String toString() {
-        return "TasktriggerUser [id=" + id + ", taskName=" + username + "]";
+        return "DelphiUserTask [id=" + id + "]";
     }
  
 }

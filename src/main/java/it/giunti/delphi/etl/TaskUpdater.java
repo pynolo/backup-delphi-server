@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.etl;
+package it.giunti.delphi.etl;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -15,8 +15,8 @@ import javax.json.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import it.giunti.tasktrigger.model.entity.TasktriggerTask;
-import it.giunti.tasktrigger.service.TasktriggerTaskService;
+import it.giunti.delphi.model.entity.DelphiTask;
+import it.giunti.delphi.service.DelphiTaskService;
 
 @Component
 public class TaskUpdater {
@@ -24,7 +24,7 @@ public class TaskUpdater {
 	@Autowired
 	EtlApi talendApi;
 	@Autowired
-	TasktriggerTaskService taskService;
+	DelphiTaskService taskService;
 	
 	public void updateTasks() throws IOException {
 		String response = "";
@@ -43,9 +43,9 @@ public class TaskUpdater {
 	
 	private void markAllTasksAsUnavailable() {
 		//Exixting Tasks on DB:
-		List<TasktriggerTask> taskList = taskService.getAllTasks();
+		List<DelphiTask> taskList = taskService.getAllTasks();
 		//Set all as unavailable
-		for (TasktriggerTask task:taskList) {
+		for (DelphiTask task:taskList) {
 			task.setAvailable(false);
 			taskService.modifyTask(task);
 		}
@@ -63,10 +63,10 @@ public class TaskUpdater {
 			String environmentId = environment.getString("id");
 			String environmentName = environment.getString("name");
 			//Exixting Tasks on DB:
-			List<TasktriggerTask> taskList = taskService.getAllTasks();
+			List<DelphiTask> taskList = taskService.getAllTasks();
 			//Match and update
 			boolean found = false;
-			for (TasktriggerTask task:taskList) {
+			for (DelphiTask task:taskList) {
 				if (task.getExecutable().equals(executable)) {
 					found = true;
 					task.setName(name);
@@ -80,7 +80,7 @@ public class TaskUpdater {
 			}
 			//Save if not found
 			if (!found) {
-				TasktriggerTask task = new TasktriggerTask();
+				DelphiTask task = new DelphiTask();
 				task.setExecutable(executable);
 				task.setName(name);
 				task.setDescription(name);

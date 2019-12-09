@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.service;
+package it.giunti.delphi.service;
 
 import java.util.List;
 
@@ -8,38 +8,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import it.giunti.tasktrigger.model.dao.TasktriggerUserDao;
-import it.giunti.tasktrigger.model.entity.TasktriggerUser;
+import it.giunti.delphi.model.dao.DelphiUserDao;
+import it.giunti.delphi.model.entity.DelphiUser;
 
-@Service("tasktriggerUserService")
-public class TasktriggerUserService {
+@Service("delphiUserService")
+public class DelphiUserService {
 
 	@Autowired
-	@Qualifier("tasktriggerUserDao")
-	private TasktriggerUserDao userDao;
+	@Qualifier("delphiUserDao")
+	private DelphiUserDao userDao;
 
 	@Transactional
-	public TasktriggerUser getUserById(int id) {
+	public DelphiUser getUserById(int id) {
 		return userDao.selectUserById(id);
 	}
 
 	@Transactional
-	public TasktriggerUser getUserByUsername(String username) {
+	public DelphiUser getUserByUsername(String username) {
 		return userDao.selectUserByUsername(username);
 	}
 	
 	@Transactional
-	public void addUser(TasktriggerUser task) {
+	public void addUser(DelphiUser task) {
 		userDao.insertUser(task);
 	}
 
 	@Transactional
-	public void modifyUser(TasktriggerUser task) {
+	public void modifyUser(DelphiUser task) {
 		userDao.updateUser(task);
 	}
 
 	@Transactional
-	public List<TasktriggerUser> getAllUsers() {
+	public List<DelphiUser> getAllUsers() {
 		return userDao.selectAllUsers();
 	}
 

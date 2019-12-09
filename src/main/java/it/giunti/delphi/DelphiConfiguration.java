@@ -1,11 +1,11 @@
-package it.giunti.tasktrigger;
+package it.giunti.delphi;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @ConfigurationProperties(prefix="talend")
 @Configuration("config")
-public class TasktriggerConfiguration {
+public class DelphiConfiguration {
 		private String endpoint;
 		private String token;
 

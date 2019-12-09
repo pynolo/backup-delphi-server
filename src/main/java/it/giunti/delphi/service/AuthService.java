@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.service;
+package it.giunti.delphi.service;
 
 import java.util.Hashtable;
 
@@ -19,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import it.giunti.tasktrigger.model.dao.TasktriggerUserDao;
-import it.giunti.tasktrigger.model.entity.TasktriggerUser;
+import it.giunti.delphi.model.dao.DelphiUserDao;
+import it.giunti.delphi.model.entity.DelphiUser;
 
 @Service("authService")
 public class AuthService {
@@ -37,14 +37,14 @@ public class AuthService {
 	private static final String ATTRIBUTE_FOR_MAIL = "mail";
 	
 	@Autowired
-	@Qualifier("tasktriggerUserDao")
-	TasktriggerUserDao userDao;
+	@Qualifier("delphiUserDao")
+	DelphiUserDao userDao;
 	
 	@Transactional
 	public void authenticate(String username, String password) throws AuthenticationException {
 		String errorString = null;
 		//Search on DB
-		TasktriggerUser u = userDao.selectUserByUsername(username);
+		DelphiUser u = userDao.selectUserByUsername(username);
 		if (u != null) {
 			// You specify in the authenticate user the attributes that you want returned.
 			// Some companies use standard attributes <like 'description' to hold an employee ID.

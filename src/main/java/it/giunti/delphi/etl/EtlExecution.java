@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.etl;
+package it.giunti.delphi.etl;
 
 public class EtlExecution {
 	

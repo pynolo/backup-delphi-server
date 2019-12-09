@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.service;
+package it.giunti.delphi.service;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import it.giunti.tasktrigger.EtlException;
-import it.giunti.tasktrigger.etl.EtlApi;
-import it.giunti.tasktrigger.etl.EtlExecution;
-import it.giunti.tasktrigger.etl.TaskUpdater;
-import it.giunti.tasktrigger.model.dao.TasktriggerTaskDao;
-import it.giunti.tasktrigger.model.entity.TasktriggerTask;
+import it.giunti.delphi.EtlException;
+import it.giunti.delphi.etl.EtlApi;
+import it.giunti.delphi.etl.EtlExecution;
+import it.giunti.delphi.etl.TaskUpdater;
+import it.giunti.delphi.model.dao.DelphiTaskDao;
+import it.giunti.delphi.model.entity.DelphiTask;
 
 @Service("etlService")
 public class EtlService {
@@ -27,8 +27,8 @@ public class EtlService {
 	@Autowired
 	private TaskUpdater taskUpdater;
     @Autowired
-    @Qualifier("tasktriggerTaskDao")
-    private TasktriggerTaskDao taskDao;
+    @Qualifier("delphiTaskDao")
+    private DelphiTaskDao taskDao;
     
 	public void updateTasks() throws EtlException {
 		try {
@@ -54,7 +54,7 @@ public class EtlService {
 
 	@Transactional
 	public EtlExecution executeByName(String name) throws EtlException {
-		TasktriggerTask task = taskDao.selectTaskByName(name);
+		DelphiTask task = taskDao.selectTaskByName(name);
 		return executeById(task.getExecutable());
 	}
 	

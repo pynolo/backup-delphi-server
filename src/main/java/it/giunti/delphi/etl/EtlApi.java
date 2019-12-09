@@ -1,17 +1,17 @@
-package it.giunti.tasktrigger.etl;
+package it.giunti.delphi.etl;
 
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import it.giunti.tasktrigger.TasktriggerConfiguration;
+import it.giunti.delphi.DelphiConfiguration;
 
 @Component
 public class EtlApi {
 	
 	@Autowired
-	TasktriggerConfiguration config;
+	DelphiConfiguration config;
 	
 	//List jobs
 	public String getExecutables() throws IOException {

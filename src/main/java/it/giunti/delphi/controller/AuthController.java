@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.controller;
+package it.giunti.delphi.controller;
 
 import java.util.LinkedHashMap;
 
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.giunti.tasktrigger.ControllerException;
-import it.giunti.tasktrigger.model.dao.TasktriggerUserDao;
-import it.giunti.tasktrigger.model.entity.TasktriggerUser;
-import it.giunti.tasktrigger.service.AuthService;
+import it.giunti.delphi.ControllerException;
+import it.giunti.delphi.model.dao.DelphiUserDao;
+import it.giunti.delphi.model.entity.DelphiUser;
+import it.giunti.delphi.service.AuthService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -25,16 +25,16 @@ public class AuthController {
     @Qualifier("authService")
     private AuthService authService;
 	@Autowired
-	@Qualifier("tasktriggerUserDao")
-	private TasktriggerUserDao userDao;
+	@Qualifier("delphiUserDao")
+	private DelphiUserDao userDao;
 	
     @PostMapping("/api/authenticate")
-    public TasktriggerUser authenticate(@Valid @RequestBody LinkedHashMap<String, String> paramsMap) throws ControllerException {
+    public DelphiUser authenticate(@Valid @RequestBody LinkedHashMap<String, String> paramsMap) throws ControllerException {
     	try {
     		String username = paramsMap.get("username");
     		String password = paramsMap.get("password");
 			authService.authenticate(username, password);
-			TasktriggerUser user = userDao.selectUserByUsername(username);
+			DelphiUser user = userDao.selectUserByUsername(username);
 			return user;
 		} catch (AuthenticationException e) {
 			throw new ControllerException(e.getMessage(), e);

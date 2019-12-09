@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.etl;
+package it.giunti.delphi.etl;
 
 import java.io.BufferedReader;
 import java.io.IOException;

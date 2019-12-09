@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.controller;
+package it.giunti.delphi.controller;
 
 import java.util.List;
 
@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.giunti.tasktrigger.model.entity.TasktriggerUser;
-import it.giunti.tasktrigger.service.TasktriggerUserService;
+import it.giunti.delphi.model.entity.DelphiUser;
+import it.giunti.delphi.service.DelphiUserService;
  
 @RestController
 @CrossOrigin(origins = "*")
-public class TasktriggerUserController {
+public class DelphiUserController {
  
     @Autowired
-    @Qualifier("tasktriggerUserService")
-    private TasktriggerUserService userService;
+    @Qualifier("delphiUserService")
+    private DelphiUserService userService;
  
     @PostMapping("/api/createuser")
-    public void createNewUser(@Valid @RequestBody TasktriggerUser user) {
+    public void createNewUser(@Valid @RequestBody DelphiUser user) {
     	userService.addUser(user);
     }
  
     @PutMapping("/api/changeuser")
-    public void changeExistingUser(@Valid @RequestBody TasktriggerUser user) {
+    public void changeExistingUser(@Valid @RequestBody DelphiUser user) {
     	userService.modifyUser(user);
     }
  
@@ -42,12 +42,12 @@ public class TasktriggerUserController {
     }
  
     @GetMapping("/api/viewsingleuser/{id}")
-    public TasktriggerUser viewUserById(@PathVariable(value = "id") int id) {
+    public DelphiUser viewUserById(@PathVariable(value = "id") int id) {
         return userService.getUserById(id);
     }
  
     @GetMapping("/api/viewallusers")
-    public List<TasktriggerUser> viewAllUsers() {
+    public List<DelphiUser> viewAllUsers() {
         return userService.getAllUsers();
     }
  

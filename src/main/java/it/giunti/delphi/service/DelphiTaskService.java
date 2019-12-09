@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.service;
+package it.giunti.delphi.service;
 
 import java.util.List;
 
@@ -8,38 +8,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import it.giunti.tasktrigger.model.dao.TasktriggerTaskDao;
-import it.giunti.tasktrigger.model.entity.TasktriggerTask;
+import it.giunti.delphi.model.dao.DelphiTaskDao;
+import it.giunti.delphi.model.entity.DelphiTask;
  
-@Service("tasktriggerTaskService")
-public class TasktriggerTaskService {
+@Service("delphiTaskService")
+public class DelphiTaskService {
  
     @Autowired
-    @Qualifier("tasktriggerTaskDao")
-    private TasktriggerTaskDao taskDao;
+    @Qualifier("delphiTaskDao")
+    private DelphiTaskDao taskDao;
  
     @Transactional
-    public TasktriggerTask getTaskById(int id) {
+    public DelphiTask getTaskById(int id) {
         return taskDao.selectTaskById(id);
     }
     
     @Transactional
-    public TasktriggerTask getTaskByName(String name) {
+    public DelphiTask getTaskByName(String name) {
         return taskDao.selectTaskByName(name);
     }
     
     @Transactional
-    public void addTask(TasktriggerTask task) {
+    public void addTask(DelphiTask task) {
     	taskDao.insertTask(task);
     }
  
     @Transactional
-    public void modifyTask(TasktriggerTask task) {
+    public void modifyTask(DelphiTask task) {
         taskDao.updateTask(task);
     }
  
     @Transactional
-    public List<TasktriggerTask> getAllTasks() {
+    public List<DelphiTask> getAllTasks() {
         return taskDao.selectAllTasks();
     }
  

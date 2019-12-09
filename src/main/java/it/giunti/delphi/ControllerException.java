@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger;
+package it.giunti.delphi;
 
 import java.io.IOException;
 

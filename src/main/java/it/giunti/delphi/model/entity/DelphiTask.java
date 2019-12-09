@@ -1,4 +1,4 @@
-package it.giunti.tasktrigger.model.entity;
+package it.giunti.delphi.model.entity;
 
 import java.util.Date;
 
@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
  
 @Entity
-@Table(name = "tasktrigger_task")
-public class TasktriggerTask {
+@Table(name = "delphi_task")
+public class DelphiTask {
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -130,7 +130,7 @@ public class TasktriggerTask {
 
 	@Override
     public String toString() {
-        return "TasktriggerTask [id=" + id + ", name=" + name + "]";
+        return "DelphiTask [id=" + id + ", name=" + name + "]";
     }
  
 }
