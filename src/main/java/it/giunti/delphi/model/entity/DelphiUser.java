@@ -22,7 +22,10 @@ public class DelphiUser {
  
     @Column(name = "username")
     private String username;
- 
+    
+    @Column(name = "role")
+    private String role;
+    
     @Column(name = "modified_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date modifiedDate;
@@ -42,6 +45,14 @@ public class DelphiUser {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public Date getModifiedDate() {

@@ -40,6 +40,7 @@ public class DelphiUserDao {
 	public void updateUser(DelphiUser user) {
 		DelphiUser userToUpdate = selectUserById(user.getId());
 		userToUpdate.setUsername(user.getUsername());
+		userToUpdate.setRole(user.getRole());
 		entityManager.flush();
 	}
 

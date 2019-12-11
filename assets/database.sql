@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS `delphi_user`;
 CREATE TABLE `delphi_user` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(256) NOT NULL,
+  `role` varchar(8) NOT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `ix_username` (`username`)
