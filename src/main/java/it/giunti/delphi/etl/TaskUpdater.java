@@ -15,6 +15,7 @@ import javax.json.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import it.giunti.delphi.TaskType;
 import it.giunti.delphi.model.entity.DelphiTask;
 import it.giunti.delphi.service.DelphiTaskService;
 
@@ -27,17 +28,29 @@ public class TaskUpdater {
 	DelphiTaskService taskService;
 	
 	public void updateTasks() throws IOException {
-		String response = "";
-    	response = talendApi.getExecutables();
-    	//Json parsing
-    	JsonReader reader = Json.createReader(new StringReader(response));
-    	JsonArray taskArray = reader.readArray();
-    	Iterator<JsonValue> iter = taskArray.iterator();
+		String taskResponse = "";
+    	taskResponse = talendApi.getAllTasks();
+    	String planResponse = "";
+    	planResponse = talendApi.getAllPlans();
+    	//Disattiva
     	markAllTasksAsUnavailable();
-    	while (iter.hasNext()) {
-    		JsonValue value = iter.next();
+    	//Task json parsing
+    	JsonReader reader = Json.createReader(new StringReader(taskResponse));
+    	JsonArray taskArray = reader.readArray();
+    	Iterator<JsonValue> taskIter = taskArray.iterator();
+    	while (taskIter.hasNext()) {
+    		JsonValue value = taskIter.next();
     		JsonObject obj = value.asJsonObject();
-    		saveOrUpdateTask(obj);
+    		saveOrUpdateTask(obj, TaskType.TASK);
+    	}
+    	//Plan json parsing
+    	reader = Json.createReader(new StringReader(planResponse));
+    	JsonArray planArray = reader.readArray();
+    	Iterator<JsonValue> planIter = planArray.iterator();
+    	while (planIter.hasNext()) {
+    		JsonValue value = planIter.next();
+    		JsonObject obj = value.asJsonObject();
+    		saveOrUpdateTask(obj, TaskType.PLAN);
     	}
 	}
 	
@@ -51,7 +64,7 @@ public class TaskUpdater {
 		}
 	}
 	
-	private void saveOrUpdateTask(JsonObject obj) throws JsonException {
+	private void saveOrUpdateTask(JsonObject obj, TaskType type) throws JsonException {
 		String executable = obj.getString("executable");
 		if (executable == null) executable = "";
 		if (executable.length() > 0) {
@@ -69,6 +82,7 @@ public class TaskUpdater {
 			for (DelphiTask task:taskList) {
 				if (task.getExecutable().equals(executable)) {
 					found = true;
+					task.setType(type.getTypeName());
 					task.setName(name);
 					task.setWorkspaceId(workspaceId);
 					task.setWorkspaceName(workspaceName);
@@ -82,6 +96,7 @@ public class TaskUpdater {
 			if (!found) {
 				DelphiTask task = new DelphiTask();
 				task.setExecutable(executable);
+				task.setType(type.getTypeName());
 				task.setName(name);
 				task.setDescription(name);
 				task.setWorkspaceId(workspaceId);

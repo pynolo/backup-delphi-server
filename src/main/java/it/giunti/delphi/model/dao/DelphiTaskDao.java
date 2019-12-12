@@ -39,6 +39,7 @@ public class DelphiTaskDao {
 
 	public void updateTask(DelphiTask task) {
 		DelphiTask taskToUpdate = selectTaskById(task.getId());
+		taskToUpdate.setType(task.getType());
 		taskToUpdate.setName(task.getName());
 		taskToUpdate.setDescription(task.getDescription());
 		taskToUpdate.setWorkspaceId(task.getWorkspaceId());

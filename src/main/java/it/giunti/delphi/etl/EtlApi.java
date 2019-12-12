@@ -13,14 +13,24 @@ public class EtlApi {
 	@Autowired
 	DelphiConfiguration config;
 	
-	//List jobs
-	public String getExecutables() throws IOException {
+	//List tasks
+	public String getAllTasks() throws IOException {
 		String urlPath="/executables";
 		String responseString = HttpUtils.executeGet(
 				config.getEndpoint()+urlPath,
 				config.getToken());
 		return responseString;
 	}
+	
+	//List plans
+	public String getAllPlans() throws IOException {
+		String urlPath="/executables/plans";
+		String responseString = HttpUtils.executeGet(
+				config.getEndpoint()+urlPath,
+				config.getToken());
+		return responseString;
+	}
+	
 	
 	//Launch execution
 	public String postExecutions(String jsonBody) throws IOException {

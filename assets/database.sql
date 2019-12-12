@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS `delphi_task`;
 CREATE TABLE `delphi_task` (
   `id` int(11) NOT NULL auto_increment,
+  `type` varchar(8) NOT NULL,
   `name` varchar(256) NOT NULL,
   `executable` varchar(256) NOT NULL,
   `description` varchar(256) NOT NULL,
