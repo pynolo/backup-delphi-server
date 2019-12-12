@@ -6,7 +6,6 @@ import java.io.StringReader;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +16,6 @@ import it.giunti.delphi.etl.EtlApi;
 import it.giunti.delphi.etl.EtlExecution;
 import it.giunti.delphi.etl.TaskUpdater;
 import it.giunti.delphi.model.dao.DelphiTaskDao;
-import it.giunti.delphi.model.entity.DelphiTask;
 
 @Service("etlService")
 public class EtlService {
@@ -52,11 +50,11 @@ public class EtlService {
 		}
 	}
 
-	@Transactional
-	public EtlExecution executeByName(String name) throws EtlException {
-		DelphiTask task = taskDao.selectTaskByName(name);
-		return executeById(task.getExecutable());
-	}
+//	@Transactional
+//	public EtlExecution executeByName(String name) throws EtlException {
+//		DelphiTask task = taskDao.selectTaskByName(name);
+//		return executeById(task.getExecutable());
+//	}
 	
 	public EtlExecution findExecution(String executionId) throws EtlException {
 		try {

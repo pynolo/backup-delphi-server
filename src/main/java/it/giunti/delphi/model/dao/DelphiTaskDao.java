@@ -20,18 +20,18 @@ public class DelphiTaskDao {
 		return entityManager.find(DelphiTask.class, id);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public DelphiTask selectTaskByName(String name) {
-		Query query = entityManager.createQuery(
-				"from DelphiTask as task where "+
-				"task.name like :s1")
-				.setParameter("s1", name);
-		List<DelphiTask> list = (List<DelphiTask>) query.getResultList();
-		if (list != null) {
-			if (list.size() > 0) return list.get(0);
-		}
-		return null;
-	}
+//	@SuppressWarnings("unchecked")
+//	public DelphiTask selectTaskByName(String name) {
+//		Query query = entityManager.createQuery(
+//				"from DelphiTask as task where "+
+//				"task.name like :s1")
+//				.setParameter("s1", name);
+//		List<DelphiTask> list = (List<DelphiTask>) query.getResultList();
+//		if (list != null) {
+//			if (list.size() > 0) return list.get(0);
+//		}
+//		return null;
+//	}
 	
 	public void insertTask(DelphiTask task) {
 		entityManager.persist(task);

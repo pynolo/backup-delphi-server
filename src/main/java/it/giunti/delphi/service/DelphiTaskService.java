@@ -23,10 +23,10 @@ public class DelphiTaskService {
         return taskDao.selectTaskById(id);
     }
     
-    @Transactional
-    public DelphiTask getTaskByName(String name) {
-        return taskDao.selectTaskByName(name);
-    }
+//    @Transactional
+//    public DelphiTask getTaskByName(String name) {
+//        return taskDao.selectTaskByName(name);
+//    }
     
     @Transactional
     public void addTask(DelphiTask task) {
