@@ -59,25 +59,25 @@ public class EtlService {
 			JsonReader reader = Json.createReader(new StringReader(responseJson));
 			JsonObject obj = reader.readObject();
 			EtlExecution exe = new EtlExecution();
-			exe.setAccountId(obj.getString("accountId"));
-			exe.setContainerId(obj.getString("containerId"));
-			exe.setEnvironmentVersion(obj.getString("environmentVersion"));
-			exe.setErrorMessage(obj.getString("errorMessage"));
-			exe.setErrorType(obj.getString("errorType"));
-			exe.setExecutionDestination(obj.getString("executionDestination"));
+			//exe.setAccountId(obj.getString("accountId"));
+			//exe.setContainerId(obj.getString("containerId"));
+			//exe.setEnvironmentVersion(obj.getString("environmentVersion"));
+			try {exe.setErrorMessage(obj.getString("errorMessage"));} catch (Exception e) {}
+			try {exe.setErrorType(obj.getString("errorType"));} catch (Exception e) {}
+			//exe.setExecutionDestination(obj.getString("executionDestination"));
 			exe.setExecutionId(obj.getString("executionId"));
 			exe.setExecutionStatus(obj.getString("executionStatus"));
-			exe.setExecutionType(obj.getString("executionType"));
-			exe.setFinishTimestamp(obj.getString("finishTimestamp"));
+			//exe.setExecutionType(obj.getString("executionType"));
+			try {exe.setFinishTimestamp(obj.getString("finishTimestamp"));} catch (Exception e) {}
 			exe.setJobId(obj.getString("jobId"));
-			exe.setJobVersion(obj.getString("jobVersion"));
-			exe.setNumberOfProcessedRows(obj.getString("numberOfProcessedRows"));
-			exe.setNumberOfRejectedRows(obj.getString("numberOfRejectedRows"));
-			exe.setPlanId(obj.getString("planId"));
-			exe.setRemoteEngineClusterId(obj.getString("remoteEngineClusterId"));
-			exe.setRunProfileId(obj.getString("runProfileId"));
-			exe.setStartTimestamp(obj.getString("startTimestamp"));
-			exe.setWorkspaceId(obj.getString("workspaceId"));
+			//exe.setJobVersion(obj.getString("jobVersion"));
+			//exe.setNumberOfProcessedRows(obj.getString("numberOfProcessedRows"));
+			//exe.setNumberOfRejectedRows(obj.getString("numberOfRejectedRows"));
+			//exe.setPlanId(obj.getString("planId"));
+			//exe.setRemoteEngineClusterId(obj.getString("remoteEngineClusterId"));
+			//exe.setRunProfileId(obj.getString("runProfileId"));
+			try {exe.setStartTimestamp(obj.getString("startTimestamp"));} catch (Exception e) {}
+			//exe.setWorkspaceId(obj.getString("workspaceId"));
 			return exe;
 		} catch (IOException e) {
 			throw new EtlException(e.getMessage(), e);
