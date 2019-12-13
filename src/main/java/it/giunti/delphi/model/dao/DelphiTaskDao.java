@@ -44,7 +44,7 @@ public class DelphiTaskDao {
 		taskToUpdate.setDescription(task.getDescription());
 		taskToUpdate.setWorkspaceId(task.getWorkspaceId());
 		taskToUpdate.setWorkspaceName(task.getWorkspaceName());
-		taskToUpdate.setEnvironamentId(task.getEnvironamentId());
+		taskToUpdate.setEnvironmentId(task.getEnvironmentId());
 		taskToUpdate.setEnvironmentName(task.getEnvironmentName());
 		taskToUpdate.setAvailable(task.isAvailable());
 		taskToUpdate.setExecutable(task.getExecutable());

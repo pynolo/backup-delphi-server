@@ -144,7 +144,7 @@ public class EtlService {
 					task.setName(name);
 					task.setWorkspaceId(workspaceId);
 					task.setWorkspaceName(workspaceName);
-					task.setEnvironamentId(environmentId);
+					task.setEnvironmentId(environmentId);
 					task.setEnvironmentName(environmentName);
 					task.setAvailable(true);
 					taskDao.updateTask(task);
@@ -159,7 +159,7 @@ public class EtlService {
 				task.setDescription(name);
 				task.setWorkspaceId(workspaceId);
 				task.setWorkspaceName(workspaceName);
-				task.setEnvironamentId(environmentId);
+				task.setEnvironmentId(environmentId);
 				task.setEnvironmentName(environmentName);
 				task.setAvailable(true);
 				taskDao.updateTask(task);

@@ -39,7 +39,7 @@ public class DelphiTask {
     private String workspaceName;
     
     @Column(name = "environment_id")
-    private String environamentId;
+    private String environmentId;
     
     @Column(name = "environment_name")
     private String environmentName;
@@ -115,12 +115,12 @@ public class DelphiTask {
 		this.workspaceName = workspaceName;
 	}
 
-	public String getEnvironamentId() {
-		return environamentId;
+	public String getEnvironmentId() {
+		return environmentId;
 	}
 
-	public void setEnvironamentId(String environamentId) {
-		this.environamentId = environamentId;
+	public void setEnvironmentId(String environamentId) {
+		this.environmentId = environamentId;
 	}
 
 	public String getEnvironmentName() {
