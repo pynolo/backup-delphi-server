@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class ControllerException extends IOException {
 	private static final long serialVersionUID = -5088542861308609230L;
-	private Throwable error;
+	private Throwable error = null;
 	private String message;
 	
 	public ControllerException(String message, Throwable error) {
@@ -12,6 +12,11 @@ public class ControllerException extends IOException {
 		this.message = message;
 	}
 
+	public ControllerException(String message) {
+		this.message = message;
+		this.error = new Exception(message);
+	}
+	
 	public Throwable getError() {
 		return error;
 	}

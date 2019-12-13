@@ -1,5 +1,7 @@
 package it.giunti.delphi.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.giunti.delphi.ControllerException;
 import it.giunti.delphi.EtlException;
+import it.giunti.delphi.TaskType;
 import it.giunti.delphi.etl.EtlExecution;
 import it.giunti.delphi.service.EtlService;
 
@@ -24,30 +27,50 @@ public class EtlController {
 	@PostMapping("/api/updatetasks")
 	public void updateTasks() throws ControllerException {
 		try {
-			etlService.updateTasks();
-		} catch (EtlException e) {
+			etlService.updateTasksAndPlans();
+		} catch (IOException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
 	}
 
-	@GetMapping("/api/executebyid/{id}")
-	public EtlExecution executeById(@PathVariable(value = "id") String id)
+	@GetMapping("/api/executebyid/{type}/{id}")
+	public EtlExecution executeById(@PathVariable(value = "type") String typeString, @PathVariable(value = "id") String id)
 			throws ControllerException {
+		TaskType type;
+		if (typeString != null && id != null) {
+			if (typeString.equalsIgnoreCase(TaskType.PLAN.getTypeName())) {
+				type = TaskType.PLAN;
+			} else {
+				type = TaskType.TASK;
+			}
+		} else {
+			throw new ControllerException("Null parameters");
+		}
 		try {
 			EtlExecution etlExecution;
-			etlExecution = etlService.executeById(id);
+			etlExecution = etlService.executeById(type,id);
 			return etlExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
 	}
 	
-	@GetMapping("/api/findexecution/{id}")
-	public EtlExecution findExecution(@PathVariable(value = "id") String id)
+	@GetMapping("/api/findexecution/{type}/{id}")
+	public EtlExecution findExecution(@PathVariable(value = "type") String typeString, @PathVariable(value = "id") String id)
 			throws ControllerException {
+		TaskType type;
+		if (typeString != null && id != null) {
+			if (typeString.equalsIgnoreCase(TaskType.PLAN.getTypeName())) {
+				type = TaskType.PLAN;
+			} else {
+				type = TaskType.TASK;
+			}
+		} else {
+			throw new ControllerException("Null parameters");
+		}
 		try {
 			EtlExecution etlExecution;
-			etlExecution = etlService.findExecution(id);
+			etlExecution = etlService.findExecution(type, id);
 			return etlExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);

@@ -11,7 +11,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.event.EventListener;
 
-import it.giunti.delphi.etl.TaskUpdater;
+import it.giunti.delphi.service.EtlService;
  
 @SpringBootApplication
 public class DelphiApplication extends SpringBootServletInitializer {
@@ -19,7 +19,7 @@ public class DelphiApplication extends SpringBootServletInitializer {
 	private static Logger LOG = LoggerFactory.getLogger(DelphiApplication.class);
 
 	@Autowired
-	TaskUpdater taskUpdater;
+	EtlService talendService;
 	
     public static void main(String[] args) {
         SpringApplication.run(DelphiApplication.class, args);
@@ -28,7 +28,7 @@ public class DelphiApplication extends SpringBootServletInitializer {
     @EventListener(ApplicationReadyEvent.class)
     public void runAfterStartup() {
     	try {
-			taskUpdater.updateTasks();
+    		talendService.updateTasksAndPlans();
 		} catch (IOException e) {
 			LOG.error(e.getMessage());
 		}
