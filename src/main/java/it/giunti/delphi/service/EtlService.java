@@ -93,23 +93,25 @@ public class EtlService {
     	//Disattiva
     	markAllAsUnavailable();
     	//Task json parsing
-    	JsonReader reader = Json.createReader(new StringReader(taskResponse));
-    	JsonArray taskArray = reader.readArray();
+    	JsonReader taskReader = Json.createReader(new StringReader(taskResponse));
+    	JsonArray taskArray = taskReader.readArray();
     	Iterator<JsonValue> taskIter = taskArray.iterator();
     	while (taskIter.hasNext()) {
     		JsonValue value = taskIter.next();
     		JsonObject obj = value.asJsonObject();
     		saveOrUpdate(obj, TaskType.TASK);
     	}
+    	taskReader.close();
     	//Plan json parsing
-    	reader = Json.createReader(new StringReader(planResponse));
-    	JsonArray planArray = reader.readArray();
+    	JsonReader planReader = Json.createReader(new StringReader(planResponse));
+    	JsonArray planArray = planReader.readArray();
     	Iterator<JsonValue> planIter = planArray.iterator();
     	while (planIter.hasNext()) {
     		JsonValue value = planIter.next();
     		JsonObject obj = value.asJsonObject();
     		saveOrUpdate(obj, TaskType.PLAN);
     	}
+    	planReader.close();
 	}
 	
 	private void markAllAsUnavailable() {

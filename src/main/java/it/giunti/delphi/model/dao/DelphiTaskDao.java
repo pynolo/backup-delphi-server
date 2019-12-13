@@ -57,7 +57,7 @@ public class DelphiTaskDao {
 
 	@SuppressWarnings("unchecked")
 	public List<DelphiTask> selectAllTasks() {
-		Query query = entityManager.createQuery("from DelphiTask as task order by task.id");
+		Query query = entityManager.createQuery("from DelphiTask as task order by task.name");
 		return (List<DelphiTask>) query.getResultList();
 	}
 
