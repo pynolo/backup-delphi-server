@@ -164,7 +164,7 @@ public class EtlService {
 				task.setEnvironmentId(environmentId);
 				task.setEnvironmentName(environmentName);
 				task.setAvailable(true);
-				taskDao.updateTask(task);
+				taskDao.insertTask(task);
 			}
 		} else {
 			throw new JsonException("'executable' does not have a value");
