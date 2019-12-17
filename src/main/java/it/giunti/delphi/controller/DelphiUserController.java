@@ -37,13 +37,13 @@ public class DelphiUserController {
     }
  
     @DeleteMapping("/api/removeuser/{id}")
-    public void removeUser(@PathVariable(value = "id") int id) {
+    public void removeUser(@PathVariable(value = "id") String id) {
     	userService.removeUser(id);
     }
  
     @GetMapping("/api/viewsingleuser/{id}")
-    public DelphiUser viewUserById(@PathVariable(value = "id") int id) {
-        return userService.getUserById(id);
+    public DelphiUser viewUserById(@PathVariable(value = "id") String id) {
+        return userService.getUserByUsername(id);
     }
  
     @GetMapping("/api/viewallusers")

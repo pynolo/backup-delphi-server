@@ -61,4 +61,14 @@ public class DelphiTaskDao {
 		return (List<DelphiTask>) query.getResultList();
 	}
 
+    @SuppressWarnings("unchecked")
+    public List<DelphiTask> selectAllTasksByUser(String username) {
+        Query query = entityManager.createQuery(
+        		"select dt from DelphiTask as dt, DelphiUserTask as dut where "+
+        		"dt.executable = dut.executable and "+
+        		"dut.username = :id1 "+
+        		"order by dt.executable")
+        		.setParameter(":id1", username);
+        return (List<DelphiTask>) query.getResultList();
+    }
 }

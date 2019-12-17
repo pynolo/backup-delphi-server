@@ -16,41 +16,41 @@ public class DelphiUserDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public DelphiUser selectUserById(int id) {
-		return entityManager.find(DelphiUser.class, id);
-	}
-
-	@SuppressWarnings("unchecked")
 	public DelphiUser selectUserByUsername(String username) {
-		Query query = entityManager.createQuery(
-				"from DelphiUser as user where "+
-				"user.username like :s1")
-				.setParameter("s1", username);
-		List<DelphiUser> list = (List<DelphiUser>) query.getResultList();
-		if (list != null) {
-			if (list.size() > 0) return list.get(0);
-		}
-		return null;
+		return entityManager.find(DelphiUser.class, username);
 	}
+//
+//	@SuppressWarnings("unchecked")
+//	public DelphiUser selectUserByUsername(String username) {
+//		Query query = entityManager.createQuery(
+//				"from DelphiUser as user where "+
+//				"user.username like :s1")
+//				.setParameter("s1", username);
+//		List<DelphiUser> list = (List<DelphiUser>) query.getResultList();
+//		if (list != null) {
+//			if (list.size() > 0) return list.get(0);
+//		}
+//		return null;
+//	}
 	
 	public void insertUser(DelphiUser user) {
 		entityManager.persist(user);
 	}
 
 	public void updateUser(DelphiUser user) {
-		DelphiUser userToUpdate = selectUserById(user.getId());
+		DelphiUser userToUpdate = selectUserByUsername(user.getUsername());
 		userToUpdate.setUsername(user.getUsername());
 		userToUpdate.setRole(user.getRole());
 		entityManager.flush();
 	}
 
-	public void deleteUser(int id) {
-		entityManager.remove(selectUserById(id));
+	public void deleteUser(String username) {
+		entityManager.remove(selectUserByUsername(username));
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<DelphiUser> selectAllUsers() {
-		Query query = entityManager.createQuery("from DelphiUser as user order by user.id");
+		Query query = entityManager.createQuery("from DelphiUser as user order by user.username");
 		return (List<DelphiUser>) query.getResultList();
 	}
 

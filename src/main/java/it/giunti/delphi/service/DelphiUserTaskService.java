@@ -24,13 +24,13 @@ public class DelphiUserTaskService {
 	}
 
 	@Transactional
-	public DelphiUserTask getUserTaskByUserTask(int idUser, int idTask) {
-		return utDao.selectUserTaskByUserTask(idUser, idTask);
+	public DelphiUserTask getUserTask(String username , String executable) {
+		return utDao.selectUserTaskByUserTask(username, executable);
 	}
 	
 	@Transactional
-	public void addUserTask(int idUser, int idTask) {
-		utDao.insertUserTask(idUser, idTask);
+	public void addUserTask(String username , String executable) {
+		utDao.insertUserTask(username, executable);
 	}
 
 	@Transactional
@@ -39,13 +39,21 @@ public class DelphiUserTaskService {
 	}
 
 	@Transactional
+	public void removeUserTask(String username , String executable) {
+		DelphiUserTask ut = utDao.selectUserTaskByUserTask(username, executable);
+		if (ut != null) {
+			utDao.deleteUserTask(ut.getId());
+		}
+	}
+	
+	@Transactional
 	public List<DelphiUserTask> getAllUserTasks() {
 		return utDao.selectAllUserTasks();
 	}
 
 	@Transactional
-	public List<DelphiUserTask> getAllUserTasksByUser(int idUser) {
-		return utDao.selectAllUserTasksByUser(idUser);
+	public List<DelphiUserTask> getAllUserTasksByUser(String username) {
+		return utDao.selectAllUserTasksByUser(username);
 	}
 
 }

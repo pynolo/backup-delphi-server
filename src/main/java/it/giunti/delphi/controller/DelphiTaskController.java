@@ -50,5 +50,9 @@ public class DelphiTaskController {
     public List<DelphiTask> viewAllTasks() {
         return taskService.getAllTasks();
     }
- 
+
+    @GetMapping("/api/viewalltasks/{id}")
+    public List<DelphiTask> viewAllTasksByUser(@PathVariable(value = "id") String id) {
+        return taskService.getAllTasksByUser(id);
+    }
 }

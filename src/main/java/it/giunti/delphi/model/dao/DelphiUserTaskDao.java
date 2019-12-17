@@ -21,13 +21,13 @@ public class DelphiUserTaskDao {
     }
  
 	@SuppressWarnings("unchecked")
-	public DelphiUserTask selectUserTaskByUserTask(int idUser, int idTask) {
+	public DelphiUserTask selectUserTaskByUserTask(String username , String executable) {
 		Query query = entityManager.createQuery(
 				"from DelphiUserTask as ut where "+
-				"ut.idUser = :id1 and "+
-				"ut.idTask = :id2")
-				.setParameter("id1", idUser)
-				.setParameter("id2", idTask);
+				"ut.username = :id1 and "+
+				"ut.executable = :id2")
+				.setParameter("id1", username)
+				.setParameter("id2", executable);
 		List<DelphiUserTask> list = (List<DelphiUserTask>) query.getResultList();
 		if (list != null) {
 			if (list.size() > 0) return list.get(0);
@@ -39,10 +39,10 @@ public class DelphiUserTaskDao {
         entityManager.persist(ut);
     }
     
-    public void insertUserTask(int idUser, int idTask) {
+    public void insertUserTask(String username , String executable) {
     	DelphiUserTask ut = new DelphiUserTask();
-    	ut.setIdUser(idUser);
-    	ut.setIdTask(idTask);
+    	ut.setUsername(username);
+    	ut.setExecutable(executable);
         entityManager.persist(ut);
     }
 
@@ -57,12 +57,12 @@ public class DelphiUserTaskDao {
     }
 
     @SuppressWarnings("unchecked")
-    public List<DelphiUserTask> selectAllUserTasksByUser(int idUser) {
+    public List<DelphiUserTask> selectAllUserTasksByUser(String username) {
         Query query = entityManager.createQuery(
         		"from DelphiUserTask as ut where "+
-        		"ut.idUser = :id1 "+
+        		"ut.username = :id1 "+
         		"order by ut.id")
-        		.setParameter(":id1", idUser);
+        		.setParameter(":id1", username);
         return (List<DelphiUserTask>) query.getResultList();
     }
 }

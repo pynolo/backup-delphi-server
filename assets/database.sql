@@ -11,27 +11,26 @@ CREATE TABLE `delphi_task` (
   `environment_name` varchar(256) NOT NULL,
   `available` bit NOT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `ix_executable` (`executable`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
 
 DROP TABLE IF EXISTS `delphi_user`;
 CREATE TABLE `delphi_user` (
-  `id` int(11) NOT NULL auto_increment,
   `username` varchar(256) NOT NULL,
   `role` varchar(8) NOT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `ix_username` (`username`)
+  PRIMARY KEY  (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
+insert into delphi_user (username,role) values ("p.tacconi", "admin");
 
 DROP TABLE IF EXISTS `delphi_user_task`;
 CREATE TABLE `delphi_user_task` (
   `id` int(11) NOT NULL auto_increment,
-  `id_user` int(11) NOT NULL,
-  `id_task` int(11) NOT NULL,
-  `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `username` varchar(256) NOT NULL,
+  `executable` varchar(256) NOT NULL,
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `ix_user_task` (`id_user`, `id_task`)
+  UNIQUE KEY `ix_user_task` (`username`, `executable`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
 
 

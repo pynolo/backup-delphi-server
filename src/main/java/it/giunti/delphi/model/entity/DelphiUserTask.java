@@ -1,15 +1,11 @@
 package it.giunti.delphi.model.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
  
 @Entity
 @Table(name = "delphi_user_task")
@@ -20,17 +16,12 @@ public class DelphiUserTask {
     @Column(name = "id")
     private int id;
  
-    @Column(name = "id_user")
-    private int idUser;
+    @Column(name = "username")
+    private String username;
     
-    @Column(name = "id_task")
-    private int idTask;
+    @Column(name = "executable")
+    private String executable;
     
-    @Column(name = "modified_date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date modifiedDate;
- 
-
     public int getId() {
 		return id;
 	}
@@ -39,28 +30,20 @@ public class DelphiUserTask {
 		this.id = id;
 	}
 
-	public int getIdUser() {
-		return idUser;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public int getIdTask() {
-		return idTask;
+	public String getExecutable() {
+		return executable;
 	}
 
-	public void setIdTask(int idTask) {
-		this.idTask = idTask;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public void setExecutable(String executable) {
+		this.executable = executable;
 	}
 
 	@Override

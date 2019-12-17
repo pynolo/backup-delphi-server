@@ -47,5 +47,9 @@ public class DelphiTaskService {
     public void removeTask(int id) {
         taskDao.deleteTask(id);
     }
- 
+
+    @Transactional
+    public List<DelphiTask> getAllTasksByUser(String username) {
+    	return taskDao.selectAllTasksByUser(username);
+    }
 }

@@ -19,11 +19,6 @@ public class DelphiUserService {
 	private DelphiUserDao userDao;
 
 	@Transactional
-	public DelphiUser getUserById(int id) {
-		return userDao.selectUserById(id);
-	}
-
-	@Transactional
 	public DelphiUser getUserByUsername(String username) {
 		return userDao.selectUserByUsername(username);
 	}
@@ -44,8 +39,8 @@ public class DelphiUserService {
 	}
 
 	@Transactional
-	public void removeUser(int id) {
-		userDao.deleteUser(id);
+	public void removeUser(String username) {
+		userDao.deleteUser(username);
 	}
 
 }
