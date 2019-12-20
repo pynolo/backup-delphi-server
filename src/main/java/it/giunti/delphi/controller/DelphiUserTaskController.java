@@ -24,27 +24,27 @@ public class DelphiUserTaskController {
     private DelphiUserTaskService userTaskService;
  
     @GetMapping("/api/viewusertask/{username}/{executable}")
-    public DelphiUserTask viewUserTaskById(
+    public DelphiMatch viewUserTask(
     		@PathVariable(value = "username") String username,
     		@PathVariable(value = "executable") String executable) {
-        return userTaskService.getUserTask(username, executable);
+        DelphiUserTask ut = userTaskService.getUserTask(username, executable);
+        DelphiMatch match = new DelphiMatch();
+        match.setUsername(username);
+        match.setExecutable(executable);
+        match.setMatch(ut != null);
+        return match;
     }
     
-    @PostMapping("/api/bindusertask")
-    public void bindUserTask(@Valid @RequestBody DelphiUserTask userTask) throws ControllerException {
-    	if (userTask != null) {
-    		userTaskService.addUserTask(userTask.getUsername(), userTask.getExecutable());
+    @PostMapping("/api/changeusertask")
+    public void changeUserTask(@Valid @RequestBody DelphiMatch match) throws ControllerException {
+    	if (match != null) {
+    		if (match.isMatch()) {
+    			userTaskService.addUserTask(match.getUsername(), match.getExecutable());
+    		} else {
+    			userTaskService.removeUserTask(match.getUsername(), match.getExecutable());
+    		}
     	} else {
-    		throw new ControllerException("userTask is null");
-    	}
-    }
- 
-    @PostMapping("/api/unbindusertask")
-    public void unbindUserTask(@Valid @RequestBody DelphiUserTask userTask)  throws ControllerException {
-    	if (userTask != null) {
-    		userTaskService.removeUserTask(userTask.getUsername(), userTask.getExecutable());
-    	} else {
-    		throw new ControllerException("userTask is null");
+    		throw new ControllerException("DelphiMatch is null");
     	}
     }
 

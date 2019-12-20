@@ -112,6 +112,7 @@ public class EtlService {
     		saveOrUpdate(obj, TaskType.PLAN);
     	}
     	planReader.close();
+    	
 	}
 	
 	private void markAllAsUnavailable() {
