@@ -68,7 +68,8 @@ public class DelphiTaskDao {
         		"dt.executable = dut.executable and "+
         		"dut.username = :id1 "+
         		"order by dt.executable")
-        		.setParameter(":id1", username);
-        return (List<DelphiTask>) query.getResultList();
+        		.setParameter("id1", username);
+        List<DelphiTask> taskList = (List<DelphiTask>) query.getResultList();
+        return taskList;
     }
 }

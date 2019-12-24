@@ -36,13 +36,14 @@ public class DelphiUserTaskController {
     }
     
     @PostMapping("/api/changeusertask")
-    public void changeUserTask(@Valid @RequestBody DelphiMatch match) throws ControllerException {
+    public DelphiMatch changeUserTask(@Valid @RequestBody DelphiMatch match) throws ControllerException {
     	if (match != null) {
     		if (match.isMatch()) {
     			userTaskService.addUserTask(match.getUsername(), match.getExecutable());
     		} else {
     			userTaskService.removeUserTask(match.getUsername(), match.getExecutable());
     		}
+    		return match;
     	} else {
     		throw new ControllerException("DelphiMatch is null");
     	}

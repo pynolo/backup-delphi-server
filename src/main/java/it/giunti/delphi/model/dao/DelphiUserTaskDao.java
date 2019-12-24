@@ -40,10 +40,13 @@ public class DelphiUserTaskDao {
     }
     
     public void insertUserTask(String username , String executable) {
-    	DelphiUserTask ut = new DelphiUserTask();
-    	ut.setUsername(username);
-    	ut.setExecutable(executable);
-        entityManager.persist(ut);
+    	DelphiUserTask found = selectUserTaskByUserTask(username, executable);
+    	if (found == null) {
+	    	DelphiUserTask ut = new DelphiUserTask();
+	    	ut.setUsername(username);
+	    	ut.setExecutable(executable);
+	        entityManager.persist(ut);
+    	}
     }
 
     public void deleteUserTask(int id) {
