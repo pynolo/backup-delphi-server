@@ -67,7 +67,7 @@ public class DelphiTaskDao {
         		"select dt from DelphiTask as dt, DelphiUserTask as dut where "+
         		"dt.executable = dut.executable and "+
         		"dut.username = :id1 "+
-        		"order by dt.executable")
+        		"order by dt.name")
         		.setParameter("id1", username);
         List<DelphiTask> taskList = (List<DelphiTask>) query.getResultList();
         return taskList;
