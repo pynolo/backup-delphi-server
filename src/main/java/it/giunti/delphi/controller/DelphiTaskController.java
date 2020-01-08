@@ -27,8 +27,8 @@ public class DelphiTaskController {
     private DelphiTaskService taskService;
  
     @PostMapping("/api/createtask")
-    public void createNewTask(@Valid @RequestBody DelphiTask task) {
-    	taskService.addTask(task);
+    public DelphiTask createNewTask(@Valid @RequestBody DelphiTask task) {
+    	return taskService.addTask(task);
     }
  
     @PutMapping("/api/changetask")

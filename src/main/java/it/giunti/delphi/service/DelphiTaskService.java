@@ -29,13 +29,13 @@ public class DelphiTaskService {
 //    }
     
     @Transactional
-    public void addTask(DelphiTask task) {
-    	taskDao.insertTask(task);
+    public DelphiTask addTask(DelphiTask task) {
+    	return taskDao.insertTask(task);
     }
  
     @Transactional
-    public void modifyTask(DelphiTask task) {
-        taskDao.updateTask(task);
+    public DelphiTask modifyTask(DelphiTask task) {
+        return taskDao.updateTask(task);
     }
  
     @Transactional

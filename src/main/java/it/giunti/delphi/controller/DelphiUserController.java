@@ -27,8 +27,8 @@ public class DelphiUserController {
     private DelphiUserService userService;
  
     @PostMapping("/api/createuser")
-    public void createNewUser(@Valid @RequestBody DelphiUser user) {
-    	userService.addUser(user);
+    public DelphiUser createNewUser(@Valid @RequestBody DelphiUser user) {
+    	return userService.addUser(user);
     }
  
     @PutMapping("/api/changeuser")

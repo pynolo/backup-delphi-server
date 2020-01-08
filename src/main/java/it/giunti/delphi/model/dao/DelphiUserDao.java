@@ -33,15 +33,18 @@ public class DelphiUserDao {
 //		return null;
 //	}
 	
-	public void insertUser(DelphiUser user) {
+	public DelphiUser insertUser(DelphiUser user) {
 		entityManager.persist(user);
+		return user;
 	}
 
-	public void updateUser(DelphiUser user) {
+	public DelphiUser updateUser(DelphiUser user) {
 		DelphiUser userToUpdate = selectUserByUsername(user.getUsername());
 		userToUpdate.setUsername(user.getUsername());
 		userToUpdate.setRole(user.getRole());
+		entityManager.merge(userToUpdate);
 		entityManager.flush();
+		return userToUpdate;
 	}
 
 	public void deleteUser(String username) {

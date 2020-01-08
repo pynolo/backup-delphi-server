@@ -33,11 +33,12 @@ public class DelphiTaskDao {
 //		return null;
 //	}
 	
-	public void insertTask(DelphiTask task) {
+	public DelphiTask insertTask(DelphiTask task) {
 		entityManager.persist(task);
+		return task;
 	}
 
-	public void updateTask(DelphiTask task) {
+	public DelphiTask updateTask(DelphiTask task) {
 		DelphiTask taskToUpdate = selectTaskById(task.getId());
 		taskToUpdate.setType(task.getType());
 		taskToUpdate.setName(task.getName());
@@ -48,7 +49,9 @@ public class DelphiTaskDao {
 		taskToUpdate.setEnvironmentName(task.getEnvironmentName());
 		taskToUpdate.setAvailable(task.isAvailable());
 		taskToUpdate.setExecutable(task.getExecutable());
+		entityManager.merge(taskToUpdate);
 		entityManager.flush();
+		return task;
 	}
 
 	public void deleteTask(int id) {

@@ -24,13 +24,13 @@ public class DelphiUserService {
 	}
 	
 	@Transactional
-	public void addUser(DelphiUser task) {
-		userDao.insertUser(task);
+	public DelphiUser addUser(DelphiUser task) {
+		return userDao.insertUser(task);
 	}
 
 	@Transactional
-	public void modifyUser(DelphiUser task) {
-		userDao.updateUser(task);
+	public DelphiUser modifyUser(DelphiUser task) {
+		return userDao.updateUser(task);
 	}
 
 	@Transactional
