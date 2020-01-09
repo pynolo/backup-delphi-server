@@ -60,7 +60,10 @@ public class DelphiTaskDao {
 
 	@SuppressWarnings("unchecked")
 	public List<DelphiTask> selectAllTasks() {
-		Query query = entityManager.createQuery("from DelphiTask as task order by task.name");
+		Query query = entityManager.createQuery("from DelphiTask as task "+
+				"where task.available = :b1 "+
+				"order by task.name")
+				.setParameter("b1", true);
 		return (List<DelphiTask>) query.getResultList();
 	}
 
@@ -69,9 +72,11 @@ public class DelphiTaskDao {
         Query query = entityManager.createQuery(
         		"select dt from DelphiTask as dt, DelphiUserTask as dut where "+
         		"dt.executable = dut.executable and "+
-        		"dut.username = :id1 "+
+        		"dut.username = :id1 and "+
+        		"dt.available = :b1 "+
         		"order by dt.name")
-        		.setParameter("id1", username);
+        		.setParameter("id1", username)
+        		.setParameter("b1", true);
         List<DelphiTask> taskList = (List<DelphiTask>) query.getResultList();
         return taskList;
     }
