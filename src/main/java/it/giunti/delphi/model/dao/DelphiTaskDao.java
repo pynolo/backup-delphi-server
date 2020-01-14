@@ -59,11 +59,12 @@ public class DelphiTaskDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<DelphiTask> selectAllTasks() {
-		Query query = entityManager.createQuery("from DelphiTask as task "+
-				"where task.available = :b1 "+
-				"order by task.name")
-				.setParameter("b1", true);
+	public List<DelphiTask> selectAllTasks(boolean onlyAvailable) {
+		String qs = "from DelphiTask as task ";
+		if (onlyAvailable) qs += "where task.available = :b1 ";
+		qs += "order by task.name ";
+		Query query = entityManager.createQuery(qs);
+		if (onlyAvailable) query.setParameter("b1", true);
 		return (List<DelphiTask>) query.getResultList();
 	}
 

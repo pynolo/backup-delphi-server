@@ -117,7 +117,7 @@ public class EtlService {
 	
 	private void markAllAsUnavailable() {
 		//Exixting Tasks on DB:
-		List<DelphiTask> taskList = taskDao.selectAllTasks();
+		List<DelphiTask> taskList = taskDao.selectAllTasks(false);
 		//Set all as unavailable
 		for (DelphiTask task:taskList) {
 			task.setAvailable(false);
@@ -136,8 +136,8 @@ public class EtlService {
 			JsonObject environment = workspace.getJsonObject("environment");
 			String environmentId = environment.getString("id");
 			String environmentName = environment.getString("name");
-			//Exixting Tasks on DB:
-			List<DelphiTask> taskList = taskDao.selectAllTasks();
+			//Existing Tasks on DB:
+			List<DelphiTask> taskList = taskDao.selectAllTasks(false);
 			//Match and update
 			boolean found = false;
 			for (DelphiTask task:taskList) {

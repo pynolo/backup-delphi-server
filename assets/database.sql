@@ -12,7 +12,7 @@ CREATE TABLE `delphi_task` (
   `available` bit NOT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `ix_executable` (`executable`)
+  UNIQUE KEY `idx_executable` (`executable`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
 
 DROP TABLE IF EXISTS `delphi_user`;

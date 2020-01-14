@@ -48,7 +48,7 @@ public class DelphiTaskController {
  
     @GetMapping("/api/viewalltasks")
     public List<DelphiTask> viewAllTasks() {
-        return taskService.getAllTasks();
+        return taskService.getAllAvailableTasks();
     }
 
     @GetMapping("/api/viewalltasks/{id}")

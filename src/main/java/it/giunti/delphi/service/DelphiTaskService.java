@@ -39,8 +39,8 @@ public class DelphiTaskService {
     }
  
     @Transactional
-    public List<DelphiTask> getAllTasks() {
-        return taskDao.selectAllTasks();
+    public List<DelphiTask> getAllAvailableTasks() {
+        return taskDao.selectAllTasks(true);
     }
  
     @Transactional
