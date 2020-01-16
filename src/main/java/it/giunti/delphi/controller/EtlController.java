@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.giunti.delphi.ControllerException;
 import it.giunti.delphi.EtlException;
 import it.giunti.delphi.TaskType;
-import it.giunti.delphi.etl.EtlExecution;
+import it.giunti.delphi.model.entity.DelphiExecution;
 import it.giunti.delphi.service.EtlService;
 
 @RestController
@@ -34,7 +34,7 @@ public class EtlController {
 	}
 
 	@GetMapping("/api/executebyid/{type}/{id}")
-	public EtlExecution executeById(@PathVariable(value = "type") String typeString, @PathVariable(value = "id") String id)
+	public DelphiExecution executeById(@PathVariable(value = "type") String typeString, @PathVariable(value = "id") String id)
 			throws ControllerException {
 		TaskType type;
 		if (typeString != null && id != null) {
@@ -47,16 +47,16 @@ public class EtlController {
 			throw new ControllerException("Null parameters");
 		}
 		try {
-			EtlExecution etlExecution;
-			etlExecution = etlService.executeById(type,id);
-			return etlExecution;
+			DelphiExecution delphiExecution;
+			delphiExecution = etlService.executeById(type,id);
+			return delphiExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
 	}
 	
 	@GetMapping("/api/findexecution/{type}/{id}")
-	public EtlExecution findExecution(@PathVariable(value = "type") String typeString, @PathVariable(value = "id") String id)
+	public DelphiExecution findExecution(@PathVariable(value = "type") String typeString, @PathVariable(value = "id") String id)
 			throws ControllerException {
 		TaskType type;
 		if (typeString != null && id != null) {
@@ -69,19 +69,19 @@ public class EtlController {
 			throw new ControllerException("Null parameters");
 		}
 		try {
-			EtlExecution etlExecution;
-			etlExecution = etlService.findExecution(type, id);
-			return etlExecution;
+			DelphiExecution delphiExecution;
+			delphiExecution = etlService.findExecution(type, id);
+			return delphiExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
 		}
 	}
 	
 //	@PostMapping("/api/executebyid")
-//	public EtlExecution executeById(@Valid @RequestBody LinkedHashMap<String, String> paramsMap)
+//	public DelphiExecution executeById(@Valid @RequestBody LinkedHashMap<String, String> paramsMap)
 //			throws ControllerException {
 //		try {
-//			EtlExecution etlExecution;
+//			DelphiExecution etlExecution;
 //			etlExecution = etlService.executeById(paramsMap.get("executable"));
 //			return etlExecution;
 //		} catch (EtlException e) {
@@ -90,9 +90,9 @@ public class EtlController {
 //	}
 
 //	@GetMapping("/api/executebyname/{name}")
-//	public EtlExecution executeByName(@PathVariable(value = "name") String name) throws ControllerException {
+//	public DelphiExecution executeByName(@PathVariable(value = "name") String name) throws ControllerException {
 //		try {
-//			EtlExecution etlExecution;
+//			DelphiExecution etlExecution;
 //			etlExecution = etlService.executeByName(name);
 //			return etlExecution;
 //		} catch (EtlException e) {
@@ -101,11 +101,11 @@ public class EtlController {
 //	}
 
 //	@PostMapping("/api/findexecution")
-//	public EtlExecution findExecution(@Valid @RequestBody LinkedHashMap<String, String> paramsMap)
+//	public DelphiExecution findExecution(@Valid @RequestBody LinkedHashMap<String, String> paramsMap)
 //			throws ControllerException {
 //		String executionId = paramsMap.get("executionId");
 //		try {
-//			EtlExecution etlExecution;
+//			DelphiExecution etlExecution;
 //			etlExecution = etlService.findExecution(executionId);
 //			return etlExecution;
 //		} catch (EtlException e) {

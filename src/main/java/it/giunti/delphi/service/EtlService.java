@@ -20,9 +20,9 @@ import org.springframework.stereotype.Service;
 import it.giunti.delphi.EtlException;
 import it.giunti.delphi.TaskType;
 import it.giunti.delphi.etl.EtlApi;
-import it.giunti.delphi.etl.EtlExecution;
 import it.giunti.delphi.model.dao.DelphiTaskDao;
 import it.giunti.delphi.model.entity.DelphiTask;
+import it.giunti.delphi.model.entity.DelphiExecution;
 
 @Service("etlService")
 public class EtlService {
@@ -33,14 +33,14 @@ public class EtlService {
     @Qualifier("delphiTaskDao")
     private DelphiTaskDao taskDao;
     
-	public EtlExecution executeById(TaskType type, String executable) throws EtlException {
-		String jsonBody = "{ \"executable\": \"" + executable + "\" }";
+	public DelphiExecution executeById(TaskType type, String executable) throws EtlException {
 		try {
-			String responseJson = talendApi.postExecution(type, jsonBody);
+			String responseJson = talendApi.postExecution(type, executable);
 			JsonReader reader = Json.createReader(new StringReader(responseJson));
 			JsonObject obj = reader.readObject();
-			EtlExecution exe = new EtlExecution();
-			exe.setExecutionId(obj.getString("executionId"));
+			DelphiExecution exe = new DelphiExecution();
+			exe.setId(obj.getString("executionId"));
+			exe.setExecutable(executable);
 			return exe;
 		} catch (IOException e) {
 			throw new EtlException(e.getMessage(), e);
@@ -48,24 +48,24 @@ public class EtlService {
 	}
 
 //	@Transactional
-//	public EtlExecution executeByName(String name) throws EtlException {
+//	public DelphiExecution executeByName(String name) throws EtlException {
 //		DelphiTask task = taskDao.selectTaskByName(name);
 //		return executeById(task.getExecutable());
 //	}
 	
-	public EtlExecution findExecution(TaskType type, String executionId) throws EtlException {
+	public DelphiExecution findExecution(TaskType type, String executionId) throws EtlException {
 		try {
 			String responseJson = talendApi.getExecution(type, executionId);
 			JsonReader reader = Json.createReader(new StringReader(responseJson));
 			JsonObject obj = reader.readObject();
-			EtlExecution exe = new EtlExecution();
+			DelphiExecution exe = new DelphiExecution();
 			//exe.setAccountId(obj.getString("accountId"));
 			//exe.setContainerId(obj.getString("containerId"));
 			//exe.setEnvironmentVersion(obj.getString("environmentVersion"));
 			try {exe.setErrorMessage(obj.getString("errorMessage"));} catch (Exception e) {}
 			try {exe.setErrorType(obj.getString("errorType"));} catch (Exception e) {}
 			//exe.setExecutionDestination(obj.getString("executionDestination"));
-			exe.setExecutionId(obj.getString("executionId"));
+			exe.setId(obj.getString("executionId"));
 			exe.setExecutionStatus(obj.getString("executionStatus"));
 			//exe.setExecutionType(obj.getString("executionType"));
 			try {exe.setFinishTimestamp(obj.getString("finishTimestamp"));} catch (Exception e) {}

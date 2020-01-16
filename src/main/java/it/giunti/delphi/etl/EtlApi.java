@@ -30,7 +30,8 @@ public class EtlApi {
 	}
 	
 	//Launch execution
-	public String postExecution(TaskType type, String jsonBody) throws IOException {
+	public String postExecution(TaskType type, String executable) throws IOException {
+		String jsonBody = "{ \"executable\": \"" + executable + "\" }";
 		String urlPath=TASK_EXECUTION_PATH;
 		if (type == TaskType.PLAN) urlPath = PLAN_EXECUTION_PATH;
 		String responseString = HttpUtils.executePost(
