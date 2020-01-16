@@ -44,12 +44,12 @@ public class DelphiExecutionController {
 		}
 	}
 	
-	@GetMapping("/api/findexecutionbyid/{type}/{id}")
+	@GetMapping("/api/findexecutionbyid/{type}/{executionId}")
 	public DelphiExecution findExecutionById(@PathVariable(value = "type") String typeString,
-			@PathVariable(value = "id") String id)
+			@PathVariable(value = "executionId") String executionId)
 			throws ControllerException {
 		TaskType type;
-		if (typeString != null && id != null) {
+		if (typeString != null && executionId != null) {
 			if (typeString.equalsIgnoreCase(TaskType.PLAN.getTypeName())) {
 				type = TaskType.PLAN;
 			} else {
@@ -60,7 +60,7 @@ public class DelphiExecutionController {
 		}
 		try {
 			DelphiExecution delphiExecution;
-			delphiExecution = executionService.retrieveExecutionByExecutionId(type, id);
+			delphiExecution = executionService.retrieveExecutionByExecutionId(type, executionId);
 			return delphiExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);

@@ -43,7 +43,7 @@ public class DelphiExecutionService {
     		} else {
     			// Ready for new execution -> run, delete db & insert
     			DelphiExecution transientExe = remoteExecuteByExecutable(type, executable);
-    			exeDao.deleteExecution(dbExe.getId());
+    			exeDao.deleteExecution(dbExe.getExecutionId());
     			result = exeDao.insertExecution(transientExe);
     		}
     	}
@@ -54,7 +54,7 @@ public class DelphiExecutionService {
     public DelphiExecution retrieveExecutionByExecutable(TaskType type, String executable) throws EtlException {
     	DelphiExecution dbExe = exeDao.selectExecutionByExecutable(executable);
     	if (dbExe != null) {
-    		return retrieveExecutionByExecutionId(type, dbExe.getId());
+    		return retrieveExecutionByExecutionId(type, dbExe.getExecutionId());
     	} else {
     		return null;
     	}
@@ -89,7 +89,7 @@ public class DelphiExecutionService {
 			JsonReader reader = Json.createReader(new StringReader(responseJson));
 			JsonObject obj = reader.readObject();
 			DelphiExecution exe = new DelphiExecution();
-			exe.setId(obj.getString("executionId"));
+			exe.setExecutionId(obj.getString("executionId"));
 			exe.setExecutable(executable);
 			return exe;
 		} catch (IOException e) {
@@ -109,7 +109,7 @@ public class DelphiExecutionService {
 			try {exe.setErrorMessage(obj.getString("errorMessage"));} catch (Exception e) {}
 			try {exe.setErrorType(obj.getString("errorType"));} catch (Exception e) {}
 			//exe.setExecutionDestination(obj.getString("executionDestination"));
-			exe.setId(obj.getString("executionId"));
+			exe.setExecutionId(obj.getString("executionId"));
 			exe.setExecutionStatus(obj.getString("executionStatus"));
 			//exe.setExecutionType(obj.getString("executionType"));
 			try {exe.setFinishTimestamp(obj.getString("finishTimestamp"));} catch (Exception e) {}

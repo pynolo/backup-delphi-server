@@ -17,7 +17,7 @@ CREATE TABLE `delphi_task` (
 
 DROP TABLE IF EXISTS `delphi_execution`;
 CREATE TABLE `delphi_execution` (
-  `id` int(11) NOT NULL auto_increment,
+  `execution_id` int(11) NOT NULL auto_increment,
   `executable` varchar(256) NOT NULL,
   `start_timestamp` varchar(64) NOT NULL,
   `finish_timestamp` varchar(64) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `delphi_execution` (
   `error_type` varchar(256) NOT NULL,
   `error_message` varchar(256) NOT NULL,
   `modified_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY  (`execution_id`),
   UNIQUE KEY `idx_executable` (`executable`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
 

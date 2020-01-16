@@ -16,8 +16,8 @@ public class DelphiExecutionDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public DelphiExecution selectExecutionByExecutionId(String id) {
-		return entityManager.find(DelphiExecution.class, id);
+	public DelphiExecution selectExecutionByExecutionId(String executionId) {
+		return entityManager.find(DelphiExecution.class, executionId);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -39,7 +39,7 @@ public class DelphiExecutionDao {
 	}
 
 	public DelphiExecution updateExecution(DelphiExecution exe) {
-		DelphiExecution exeToUpdate = selectExecutionByExecutionId(exe.getId());
+		DelphiExecution exeToUpdate = selectExecutionByExecutionId(exe.getExecutionId());
 		exeToUpdate.setErrorMessage(exe.getErrorMessage());
 		exeToUpdate.setErrorType(exe.getErrorType());
 		exeToUpdate.setExecutable(exe.getExecutable());

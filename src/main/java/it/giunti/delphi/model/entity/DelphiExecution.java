@@ -2,8 +2,6 @@ package it.giunti.delphi.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,9 +10,8 @@ import javax.persistence.Table;
 public class DelphiExecution {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-	private String id; //executionId "7b2b122e-d6b8-42de-b0ba-fa2f0d36306e",
+    @Column(name = "execution_id")
+	private String executionId; //"7b2b122e-d6b8-42de-b0ba-fa2f0d36306e",
 	@Column(name = "start_timestamp")
 	private String startTimestamp; //"2019-12-04T09:13:16.855Z",
 	@Column(name = "finish_timestamp")
@@ -46,14 +43,15 @@ public class DelphiExecution {
 	@Column(name="executable")
 	private String executable;
 	
-	public String getId() {
-		return id;
-	}
 	
-	public void setId(String id) {
-		this.id = id;
+	public String getExecutionId() {
+		return executionId;
 	}
-	
+
+	public void setExecutionId(String executionId) {
+		this.executionId = executionId;
+	}
+
 	public String getExecutable() {
 		return executable;
 	}
@@ -120,7 +118,7 @@ public class DelphiExecution {
 
 	@Override
     public String toString() {
-        return "DelphiExecution [id=" + id + "]";
+        return "DelphiExecution [executionId=" + executionId + "]";
     }
  
 }
