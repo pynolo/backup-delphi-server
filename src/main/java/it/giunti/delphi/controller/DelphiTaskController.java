@@ -1,5 +1,6 @@
 package it.giunti.delphi.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.giunti.delphi.ControllerException;
 import it.giunti.delphi.model.entity.DelphiTask;
 import it.giunti.delphi.service.DelphiTaskService;
  
@@ -25,7 +27,16 @@ public class DelphiTaskController {
     @Autowired
     @Qualifier("delphiTaskService")
     private DelphiTaskService taskService;
- 
+
+	@PostMapping("/api/updatetasks")
+	public void updateTasks() throws ControllerException {
+		try {
+			taskService.updateTasksAndPlans();
+		} catch (IOException e) {
+			throw new ControllerException(e.getMessage(), e);
+		}
+	}
+
     @PostMapping("/api/createtask")
     public DelphiTask createNewTask(@Valid @RequestBody DelphiTask task) {
     	return taskService.addTask(task);
