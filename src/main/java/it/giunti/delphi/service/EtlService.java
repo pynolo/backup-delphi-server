@@ -141,7 +141,8 @@ public class EtlService {
 			//Match and update
 			boolean found = false;
 			for (DelphiTask task:taskList) {
-				if (task.getExecutable().equals(executable)) {
+				if (hasSameExecutable(task, executable) ||
+						hasSameDetails(task, name, workspaceName, environmentName)) {
 					found = true;
 					task.setType(type.getTypeName());
 					task.setName(name);
@@ -171,4 +172,18 @@ public class EtlService {
 			throw new JsonException("'executable' does not have a value");
 		}
 	}
+	
+	private boolean hasSameExecutable(DelphiTask oldTask, String newExecutable) {
+		return oldTask.getExecutable().equals(newExecutable);
+	}
+	
+	private boolean hasSameDetails(DelphiTask oldTask, String newName, String newWorkspaceName, String newEnvironmentName) {
+		if (newName == null) newName = "";
+		if (newWorkspaceName == null) newWorkspaceName = "";
+		if (newEnvironmentName == null) newEnvironmentName = "";
+		return oldTask.getName().trim().equalsIgnoreCase(newName.trim()) &&
+				oldTask.getWorkspaceName().trim().equalsIgnoreCase(newWorkspaceName.trim()) &&
+				oldTask.getEnvironmentName().trim().equalsIgnoreCase(newEnvironmentName.trim());
+	}
+	
 }
