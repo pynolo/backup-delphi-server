@@ -138,11 +138,10 @@ public class EtlService {
 			String environmentName = environment.getString("name");
 			//Existing Tasks on DB:
 			List<DelphiTask> taskList = taskDao.selectAllTasks(false);
-			//Match and update
+			//Match and update by executable
 			boolean found = false;
 			for (DelphiTask task:taskList) {
-				if (hasSameExecutable(task, executable) ||
-						hasSameDetails(task, name, workspaceName, environmentName)) {
+				if (hasSameExecutable(task, executable)) {
 					found = true;
 					task.setType(type.getTypeName());
 					task.setName(name);
@@ -154,13 +153,30 @@ public class EtlService {
 					taskDao.updateTask(task);
 				}
 			}
+			//Match and update by details
+			if (!found) {
+				for (DelphiTask task:taskList) {
+					if (hasSameDetails(task, name, workspaceName, environmentName)) {
+						found = true;
+						task.setExecutable(executable);
+						task.setType(type.getTypeName());
+						task.setName(name);
+						task.setWorkspaceId(workspaceId);
+						task.setWorkspaceName(workspaceName);
+						task.setEnvironmentId(environmentId);
+						task.setEnvironmentName(environmentName);
+						task.setAvailable(true);
+						taskDao.updateTask(task);
+					}
+				}
+			}
 			//Save if not found
 			if (!found) {
 				DelphiTask task = new DelphiTask();
 				task.setExecutable(executable);
 				task.setType(type.getTypeName());
 				task.setName(name);
-				task.setDescription(name);
+				task.setDescription("");
 				task.setWorkspaceId(workspaceId);
 				task.setWorkspaceName(workspaceName);
 				task.setEnvironmentId(environmentId);
