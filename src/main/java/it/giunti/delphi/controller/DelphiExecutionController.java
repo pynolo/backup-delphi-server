@@ -59,8 +59,11 @@ public class DelphiExecutionController {
 			throw new ControllerException("Null parameters");
 		}
 		try {
-			DelphiExecution delphiExecution;
-			delphiExecution = executionService.retrieveExecutionByExecutionId(type, executionId);
+			DelphiExecution delphiExecution = executionService.retrieveExecutionByExecutionId(type, executionId);
+			if (delphiExecution == null) {
+				delphiExecution = new DelphiExecution();
+				delphiExecution.setExecutionId(executionId);
+			}
 			return delphiExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
@@ -82,8 +85,11 @@ public class DelphiExecutionController {
 			throw new ControllerException("Null parameters");
 		}
 		try {
-			DelphiExecution delphiExecution;
-			delphiExecution = executionService.retrieveExecutionByExecutable(type, executable);
+			DelphiExecution delphiExecution = executionService.retrieveExecutionByExecutable(type, executable);
+			if (delphiExecution == null) {
+				delphiExecution = new DelphiExecution();
+				delphiExecution.setExecutable(executable);
+			}
 			return delphiExecution;
 		} catch (EtlException e) {
 			throw new ControllerException(e.getMessage(), e);
