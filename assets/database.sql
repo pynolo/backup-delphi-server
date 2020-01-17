@@ -17,15 +17,15 @@ CREATE TABLE `delphi_task` (
 
 DROP TABLE IF EXISTS `delphi_execution`;
 CREATE TABLE `delphi_execution` (
-  `execution_id` int(11) NOT NULL auto_increment,
+  `execution_id` varchar(256) NOT NULL,
   `executable` varchar(256) NOT NULL,
-  `start_timestamp` varchar(64) NOT NULL,
-  `finish_timestamp` varchar(64) NOT NULL,
-  `job_id` varchar(256) NOT NULL,
-  `job_version` varchar(256) NOT NULL,
-  `execution_status` varchar(256) NOT NULL,
-  `error_type` varchar(256) NOT NULL,
-  `error_message` varchar(256) NOT NULL,
+  `start_timestamp` varchar(64) NULL,
+  `finish_timestamp` varchar(64) NULL,
+  `job_id` varchar(256) NULL,
+  `job_version` varchar(256) NULL,
+  `execution_status` varchar(256) NULL,
+  `error_type` varchar(256) NULL,
+  `error_message` varchar(256) NULL,
   `modified_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`execution_id`),
   UNIQUE KEY `idx_executable` (`executable`)

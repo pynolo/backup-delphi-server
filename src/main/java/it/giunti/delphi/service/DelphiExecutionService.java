@@ -36,15 +36,17 @@ public class DelphiExecutionService {
     		DelphiExecution transientExe = remoteExecuteByExecutable(type, executable);
     		result = exeDao.insertExecution(transientExe);
     	} else {
+    		if (dbExe.getStartTimestamp() == null) dbExe.setStartTimestamp("");
     		if (dbExe.getFinishTimestamp() == null) dbExe.setFinishTimestamp("");
-    		if (dbExe.getFinishTimestamp().length() == 0){
+    		if (dbExe.getStartTimestamp().length() > 0 && dbExe.getFinishTimestamp().length() == 0){
     			// Still running -> error
     			throw new EtlException("Task is still running", new Exception());
     		} else {
     			// Ready for new execution -> run, delete db & insert
     			DelphiExecution transientExe = remoteExecuteByExecutable(type, executable);
     			exeDao.deleteExecution(dbExe.getExecutionId());
-    			result = exeDao.insertExecution(transientExe);
+    			exeDao.insertExecution(transientExe);
+    			result = retrieveExecutionByExecutionId(type, transientExe.getExecutionId());
     		}
     	}
     	return result;
@@ -68,7 +70,7 @@ public class DelphiExecutionService {
 	    	if (dbExe != null) {
 		    	dbExe.setErrorMessage(etlExe.getErrorMessage());
 		    	dbExe.setErrorType(etlExe.getErrorType());
-		    	dbExe.setExecutable(etlExe.getExecutable());
+		    	//dbExe.setExecutable(etlExe.getExecutable()); remote is always empty!!
 		    	dbExe.setExecutionStatus(etlExe.getExecutionStatus());
 		    	dbExe.setFinishTimestamp(etlExe.getFinishTimestamp());
 		    	dbExe.setStartTimestamp(etlExe.getStartTimestamp());

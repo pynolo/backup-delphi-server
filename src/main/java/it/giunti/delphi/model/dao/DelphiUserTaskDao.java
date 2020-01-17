@@ -50,7 +50,10 @@ public class DelphiUserTaskDao {
     }
 
     public void deleteUserTask(int id) {
-        entityManager.remove(selectUserTaskById(id));
+		DelphiUserTask ut = selectUserTaskById(id);
+		entityManager.merge(ut);
+		entityManager.remove(ut);
+		entityManager.flush();
     }
  
     @SuppressWarnings("unchecked")

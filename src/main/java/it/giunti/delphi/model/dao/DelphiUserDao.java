@@ -48,7 +48,10 @@ public class DelphiUserDao {
 	}
 
 	public void deleteUser(String username) {
-		entityManager.remove(selectUserByUsername(username));
+		DelphiUser user = selectUserByUsername(username);
+		entityManager.merge(user);
+		entityManager.remove(user);
+		entityManager.flush();
 	}
 
 	@SuppressWarnings("unchecked")

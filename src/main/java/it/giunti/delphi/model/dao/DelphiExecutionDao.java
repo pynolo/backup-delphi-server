@@ -54,7 +54,10 @@ public class DelphiExecutionDao {
 	}
 
 	public void deleteExecution(String id) {
-		entityManager.remove(selectExecutionByExecutionId(id));
+		DelphiExecution exe = selectExecutionByExecutionId(id);
+		entityManager.merge(exe);
+		entityManager.remove(exe);
+		entityManager.flush();
 	}
 
 }
