@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.giunti.delphi.ControllerException;
 import it.giunti.delphi.EtlException;
-import it.giunti.delphi.TaskType;
+import it.giunti.delphi.TaskTypeEnum;
 import it.giunti.delphi.model.entity.DelphiExecution;
 import it.giunti.delphi.service.DelphiExecutionService;
 
@@ -25,12 +25,12 @@ public class DelphiExecutionController {
 	public DelphiExecution executeByExecutable(@PathVariable(value = "type") String typeString,
 			@PathVariable(value = "executable") String executable)
 			throws ControllerException {
-		TaskType type;
+		TaskTypeEnum type;
 		if (typeString != null && executable != null) {
-			if (typeString.equalsIgnoreCase(TaskType.PLAN.getTypeName())) {
-				type = TaskType.PLAN;
+			if (typeString.equalsIgnoreCase(TaskTypeEnum.PLAN.getTypeName())) {
+				type = TaskTypeEnum.PLAN;
 			} else {
-				type = TaskType.TASK;
+				type = TaskTypeEnum.TASK;
 			}
 		} else {
 			throw new ControllerException("Null parameters");
@@ -48,12 +48,12 @@ public class DelphiExecutionController {
 	public DelphiExecution findExecutionById(@PathVariable(value = "type") String typeString,
 			@PathVariable(value = "executionId") String executionId)
 			throws ControllerException {
-		TaskType type;
+		TaskTypeEnum type;
 		if (typeString != null && executionId != null) {
-			if (typeString.equalsIgnoreCase(TaskType.PLAN.getTypeName())) {
-				type = TaskType.PLAN;
+			if (typeString.equalsIgnoreCase(TaskTypeEnum.PLAN.getTypeName())) {
+				type = TaskTypeEnum.PLAN;
 			} else {
-				type = TaskType.TASK;
+				type = TaskTypeEnum.TASK;
 			}
 		} else {
 			throw new ControllerException("Null parameters");
@@ -74,13 +74,13 @@ public class DelphiExecutionController {
 	public DelphiExecution findExecutionByExecutable(@PathVariable(value = "type") String typeString,
 			@PathVariable(value = "executable") String executable)
 			throws ControllerException {
-		TaskType type;
+		TaskTypeEnum type;
 		if (typeString != null && executable != null) {
 			if (!typeString.equals("") && !executable.equals("")) {
-				if (typeString.equalsIgnoreCase(TaskType.PLAN.getTypeName())) {
-					type = TaskType.PLAN;
+				if (typeString.equalsIgnoreCase(TaskTypeEnum.PLAN.getTypeName())) {
+					type = TaskTypeEnum.PLAN;
 				} else {
-					type = TaskType.TASK;
+					type = TaskTypeEnum.TASK;
 				}
 			} else {
 				throw new ControllerException("Empty parameters");

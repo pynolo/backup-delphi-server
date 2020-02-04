@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import it.giunti.delphi.TaskType;
+import it.giunti.delphi.TaskTypeEnum;
 import it.giunti.delphi.etl.EtlApi;
 import it.giunti.delphi.model.dao.DelphiTaskDao;
 import it.giunti.delphi.model.entity.DelphiTask;
@@ -70,9 +70,9 @@ public class DelphiTaskService {
 	@Transactional
 	public void updateTasksAndPlans() throws IOException {
 		String taskResponse = "";
-    	taskResponse = talendApi.getAllTasks(TaskType.TASK);
+    	taskResponse = talendApi.getAllTasks(TaskTypeEnum.TASK);
     	String planResponse = "";
-    	planResponse = talendApi.getAllTasks(TaskType.PLAN);
+    	planResponse = talendApi.getAllTasks(TaskTypeEnum.PLAN);
     	//Disattiva
     	markAllAsUnavailable();
     	//Task json parsing
@@ -82,7 +82,7 @@ public class DelphiTaskService {
     	while (taskIter.hasNext()) {
     		JsonValue value = taskIter.next();
     		JsonObject obj = value.asJsonObject();
-    		saveOrUpdate(obj, TaskType.TASK);
+    		saveOrUpdate(obj, TaskTypeEnum.TASK);
     	}
     	taskReader.close();
     	//Plan json parsing
@@ -92,7 +92,7 @@ public class DelphiTaskService {
     	while (planIter.hasNext()) {
     		JsonValue value = planIter.next();
     		JsonObject obj = value.asJsonObject();
-    		saveOrUpdate(obj, TaskType.PLAN);
+    		saveOrUpdate(obj, TaskTypeEnum.PLAN);
     	}
     	planReader.close();
 	}
@@ -106,7 +106,7 @@ public class DelphiTaskService {
 		}
 	}
 	
-	private void saveOrUpdate(JsonObject obj, TaskType type) throws JsonException {
+	private void saveOrUpdate(JsonObject obj, TaskTypeEnum type) throws JsonException {
 		String executable = obj.getString("executable");
 		if (executable == null) executable = "";
 		if (executable.length() > 0) {

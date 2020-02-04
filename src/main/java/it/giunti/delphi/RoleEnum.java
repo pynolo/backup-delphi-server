@@ -1,12 +1,12 @@
 package it.giunti.delphi;
 
-public enum Role {
+public enum RoleEnum {
 	ADMIN("admin"),
 	USER("user");
 	
 	private final String roleName;
 	
-	Role(String roleName) {
+	RoleEnum(String roleName) {
 		this.roleName=roleName;
 	}
 	

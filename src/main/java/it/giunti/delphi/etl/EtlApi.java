@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.giunti.delphi.DelphiConfiguration;
-import it.giunti.delphi.TaskType;
+import it.giunti.delphi.TaskTypeEnum;
 
 @Component
 public class EtlApi {
@@ -20,9 +20,9 @@ public class EtlApi {
 	DelphiConfiguration config;
 	
 	//List tasks
-	public String getAllTasks(TaskType type) throws IOException {
+	public String getAllTasks(TaskTypeEnum type) throws IOException {
 		String urlPath=TASK_EXECUTABLE_PATH;
-		if (type == TaskType.PLAN) urlPath = PLAN_EXECUTABLE_PATH;
+		if (type == TaskTypeEnum.PLAN) urlPath = PLAN_EXECUTABLE_PATH;
 		String responseString = HttpUtils.executeGet(
 				config.getEndpoint()+urlPath,
 				config.getToken());
@@ -30,10 +30,10 @@ public class EtlApi {
 	}
 	
 	//Launch execution
-	public String postExecution(TaskType type, String executable) throws IOException {
+	public String postExecution(TaskTypeEnum type, String executable) throws IOException {
 		String jsonBody = "{ \"executable\": \"" + executable + "\" }";
 		String urlPath=TASK_EXECUTION_PATH;
-		if (type == TaskType.PLAN) urlPath = PLAN_EXECUTION_PATH;
+		if (type == TaskTypeEnum.PLAN) urlPath = PLAN_EXECUTION_PATH;
 		String responseString = HttpUtils.executePost(
 				config.getEndpoint()+urlPath,
 				config.getToken(),
@@ -42,9 +42,9 @@ public class EtlApi {
 	}
 	
 	//Execution status
-	public String getExecution(TaskType type, String executionId) throws IOException {
+	public String getExecution(TaskTypeEnum type, String executionId) throws IOException {
 		String urlPath=TASK_EXECUTION_PATH+"/"+executionId;
-		if (type == TaskType.PLAN) urlPath = PLAN_EXECUTION_PATH+"/"+executionId;
+		if (type == TaskTypeEnum.PLAN) urlPath = PLAN_EXECUTION_PATH+"/"+executionId;
 		String responseString = HttpUtils.executeGet(
 				config.getEndpoint()+urlPath,
 				config.getToken());

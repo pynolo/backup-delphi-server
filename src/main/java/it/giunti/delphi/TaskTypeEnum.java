@@ -1,12 +1,12 @@
 package it.giunti.delphi;
 
-public enum TaskType {
+public enum TaskTypeEnum {
 	TASK("task"),
 	PLAN("plan");
 	
 	private final String typeName;
 	
-	TaskType(String roleName) {
+	TaskTypeEnum(String roleName) {
 		this.typeName=roleName;
 	}
 	

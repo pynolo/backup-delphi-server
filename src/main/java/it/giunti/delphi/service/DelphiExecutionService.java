@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import it.giunti.delphi.EndedTaskStatusEnum;
 import it.giunti.delphi.EtlException;
-import it.giunti.delphi.TaskType;
+import it.giunti.delphi.TaskTypeEnum;
 import it.giunti.delphi.etl.EtlApi;
 import it.giunti.delphi.model.dao.DelphiExecutionDao;
 import it.giunti.delphi.model.dao.DelphiTaskDao;
@@ -33,7 +34,7 @@ public class DelphiExecutionService {
     private DelphiExecutionDao exeDao;
     
     @Transactional
-    public DelphiExecution executeByExecutable(TaskType type, String executable) throws EtlException {
+    public DelphiExecution executeByExecutable(TaskTypeEnum type, String executable) throws EtlException {
     	DelphiTask task = taskDao.selectTaskByExecutable(executable);
     	if (task == null) throw new EtlException("No task corresponds to "+executable, new Exception());
     	DelphiExecution dbExe = retrieveExecutionByExecutable(type, executable);
@@ -43,24 +44,32 @@ public class DelphiExecutionService {
     		DelphiExecution transientExe = remoteExecuteByExecutable(type, executable, task.getName());
     		result = exeDao.insertExecution(transientExe);
     	} else {
-    		if (dbExe.getStartTimestamp() == null) dbExe.setStartTimestamp("");
-    		if (dbExe.getFinishTimestamp() == null) dbExe.setFinishTimestamp("");
-    		if (dbExe.getStartTimestamp().length() > 0 && dbExe.getFinishTimestamp().length() == 0){
-    			// Still running -> error
-    			throw new EtlException("Task is still running", new Exception());
-    		} else {
+    		// Commented checks on finish time: Talend doesn't provide it
+    		//if (dbExe.getStartTimestamp() == null) dbExe.setStartTimestamp("");
+    		//if (dbExe.getFinishTimestamp() == null) dbExe.setFinishTimestamp("");
+    		//if (dbExe.getStartTimestamp().length() > 0 && dbExe.getFinishTimestamp().length() == 0){
+    		boolean ended = false;
+    		for (EndedTaskStatusEnum status:EndedTaskStatusEnum.values()) {
+    			if (status.getStatusName().equals(dbExe.getExecutionStatus())) {
+    				ended = true;
+    			}
+    		}
+    		if (ended) {
     			// Ready for new execution -> run, delete db & insert
     			DelphiExecution transientExe = remoteExecuteByExecutable(type, executable, task.getName());
     			exeDao.deleteExecution(dbExe.getExecutionId());
     			exeDao.insertExecution(transientExe);
     			result = retrieveExecutionByExecutionId(type, transientExe.getExecutionId());
+    		} else {
+    			// Still running -> error
+    			throw new EtlException("Task is running at the moment", new Exception());
     		}
     	}
     	return result;
     }
     
     @Transactional
-    public DelphiExecution retrieveExecutionByExecutable(TaskType type, String executable) throws EtlException {
+    public DelphiExecution retrieveExecutionByExecutable(TaskTypeEnum type, String executable) throws EtlException {
     	DelphiExecution dbExe = exeDao.selectExecutionByExecutable(executable);
     	if (dbExe != null) {
     		return retrieveExecutionByExecutionId(type, dbExe.getExecutionId());
@@ -70,7 +79,7 @@ public class DelphiExecutionService {
     }
     
     @Transactional
-    public DelphiExecution retrieveExecutionByExecutionId(TaskType type, String executionId) throws EtlException {
+    public DelphiExecution retrieveExecutionByExecutionId(TaskTypeEnum type, String executionId) throws EtlException {
     	DelphiExecution etlExe = remoteFindExecution(type, executionId);
     	if (etlExe != null) {
 	    	DelphiExecution dbExe = exeDao.selectExecutionByExecutionId(executionId);
@@ -93,7 +102,7 @@ public class DelphiExecutionService {
     	return null;
     }
 
-	private DelphiExecution remoteExecuteByExecutable(TaskType type, String executable, String name) throws EtlException {
+	private DelphiExecution remoteExecuteByExecutable(TaskTypeEnum type, String executable, String name) throws EtlException {
 		try {
 			String responseJson = talendApi.postExecution(type, executable);
 			JsonReader reader = Json.createReader(new StringReader(responseJson));
@@ -108,7 +117,7 @@ public class DelphiExecutionService {
 		}
 	}
 
-	private DelphiExecution remoteFindExecution(TaskType type, String executionId) throws EtlException {
+	private DelphiExecution remoteFindExecution(TaskTypeEnum type, String executionId) throws EtlException {
 		try {
 			String responseJson = talendApi.getExecution(type, executionId);
 			JsonReader reader = Json.createReader(new StringReader(responseJson));
@@ -124,7 +133,7 @@ public class DelphiExecutionService {
 			exe.setExecutionStatus(obj.getString("executionStatus"));
 			//exe.setExecutionType(obj.getString("executionType"));
 			try {exe.setFinishTimestamp(obj.getString("finishTimestamp"));} catch (Exception e) {}
-			exe.setJobId(obj.getString("jobId"));
+			try {exe.setJobId(obj.getString("jobId"));} catch (Exception e) {}
 			//exe.setJobVersion(obj.getString("jobVersion"));
 			//exe.setNumberOfProcessedRows(obj.getString("numberOfProcessedRows"));
 			//exe.setNumberOfRejectedRows(obj.getString("numberOfRejectedRows"));
@@ -134,7 +143,7 @@ public class DelphiExecutionService {
 			try {exe.setStartTimestamp(obj.getString("startTimestamp"));} catch (Exception e) {}
 			//exe.setWorkspaceId(obj.getString("workspaceId"));
 			return exe;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new EtlException(e.getMessage(), e);
 		}
 	}
