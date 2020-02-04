@@ -42,7 +42,8 @@ public class DelphiExecution {
 	
 	@Column(name="executable")
 	private String executable;
-	
+	@Column(name = "name")
+	private String name; //"string"
 	
 	public String getExecutionId() {
 		return executionId;
@@ -58,6 +59,14 @@ public class DelphiExecution {
 
 	public void setExecutable(String executable) {
 		this.executable = executable;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getStartTimestamp() {

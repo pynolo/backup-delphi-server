@@ -16,24 +16,31 @@ import it.giunti.delphi.EtlException;
 import it.giunti.delphi.TaskType;
 import it.giunti.delphi.etl.EtlApi;
 import it.giunti.delphi.model.dao.DelphiExecutionDao;
+import it.giunti.delphi.model.dao.DelphiTaskDao;
 import it.giunti.delphi.model.entity.DelphiExecution;
+import it.giunti.delphi.model.entity.DelphiTask;
 
 @Service("delphiExecutionService")
 public class DelphiExecutionService {
 
 	@Autowired
 	private EtlApi talendApi;
+	@Autowired
+    @Qualifier("delphiTaskDao")
+    private DelphiTaskDao taskDao;
     @Autowired
     @Qualifier("delphiExecutionDao")
     private DelphiExecutionDao exeDao;
     
     @Transactional
     public DelphiExecution executeByExecutable(TaskType type, String executable) throws EtlException {
+    	DelphiTask task = taskDao.selectTaskByExecutable(executable);
+    	if (task == null) throw new EtlException("No task corresponds to "+executable, new Exception());
     	DelphiExecution dbExe = retrieveExecutionByExecutable(type, executable);
     	DelphiExecution result = null;
     	if (dbExe == null) {
     		// Never run before -> run and insert db
-    		DelphiExecution transientExe = remoteExecuteByExecutable(type, executable);
+    		DelphiExecution transientExe = remoteExecuteByExecutable(type, executable, task.getName());
     		result = exeDao.insertExecution(transientExe);
     	} else {
     		if (dbExe.getStartTimestamp() == null) dbExe.setStartTimestamp("");
@@ -43,7 +50,7 @@ public class DelphiExecutionService {
     			throw new EtlException("Task is still running", new Exception());
     		} else {
     			// Ready for new execution -> run, delete db & insert
-    			DelphiExecution transientExe = remoteExecuteByExecutable(type, executable);
+    			DelphiExecution transientExe = remoteExecuteByExecutable(type, executable, task.getName());
     			exeDao.deleteExecution(dbExe.getExecutionId());
     			exeDao.insertExecution(transientExe);
     			result = retrieveExecutionByExecutionId(type, transientExe.getExecutionId());
@@ -71,6 +78,7 @@ public class DelphiExecutionService {
 		    	dbExe.setErrorMessage(etlExe.getErrorMessage());
 		    	dbExe.setErrorType(etlExe.getErrorType());
 		    	//dbExe.setExecutable(etlExe.getExecutable()); remote is always empty!!
+		    	//dbExe.setName(etlExe.getName()); is always empty!!
 		    	dbExe.setExecutionStatus(etlExe.getExecutionStatus());
 		    	dbExe.setFinishTimestamp(etlExe.getFinishTimestamp());
 		    	dbExe.setStartTimestamp(etlExe.getStartTimestamp());
@@ -85,7 +93,7 @@ public class DelphiExecutionService {
     	return null;
     }
 
-	private DelphiExecution remoteExecuteByExecutable(TaskType type, String executable) throws EtlException {
+	private DelphiExecution remoteExecuteByExecutable(TaskType type, String executable, String name) throws EtlException {
 		try {
 			String responseJson = talendApi.postExecution(type, executable);
 			JsonReader reader = Json.createReader(new StringReader(responseJson));
@@ -93,6 +101,7 @@ public class DelphiExecutionService {
 			DelphiExecution exe = new DelphiExecution();
 			exe.setExecutionId(obj.getString("executionId"));
 			exe.setExecutable(executable);
+			exe.setName(name);
 			return exe;
 		} catch (IOException e) {
 			throw new EtlException(e.getMessage(), e);

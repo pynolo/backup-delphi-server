@@ -19,13 +19,14 @@ DROP TABLE IF EXISTS `delphi_execution`;
 CREATE TABLE `delphi_execution` (
   `execution_id` varchar(256) NOT NULL,
   `executable` varchar(256) NOT NULL,
+  `name` varchar(256) DEFAULT NULL,
   `start_timestamp` varchar(64) NULL,
   `finish_timestamp` varchar(64) NULL,
   `job_id` varchar(256) NULL,
   `job_version` varchar(256) NULL,
   `execution_status` varchar(256) NULL,
   `error_type` varchar(256) NULL,
-  `error_message` varchar(256) NULL,
+  `error_message` TEXT NULL,
   `modified_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (`execution_id`),
   UNIQUE KEY `idx_executable` (`executable`)

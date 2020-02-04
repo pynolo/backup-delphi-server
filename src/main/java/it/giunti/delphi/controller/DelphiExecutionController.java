@@ -76,10 +76,14 @@ public class DelphiExecutionController {
 			throws ControllerException {
 		TaskType type;
 		if (typeString != null && executable != null) {
-			if (typeString.equalsIgnoreCase(TaskType.PLAN.getTypeName())) {
-				type = TaskType.PLAN;
+			if (!typeString.equals("") && !executable.equals("")) {
+				if (typeString.equalsIgnoreCase(TaskType.PLAN.getTypeName())) {
+					type = TaskType.PLAN;
+				} else {
+					type = TaskType.TASK;
+				}
 			} else {
-				type = TaskType.TASK;
+				throw new ControllerException("Empty parameters");
 			}
 		} else {
 			throw new ControllerException("Null parameters");
