@@ -37,7 +37,7 @@ public class DelphiExecution {
 	//private String planId; //"string",
 	@Column(name = "error_type")
 	private String errorType; //"string",
-	@Column(name = "error_message")
+	@Column(name = "error_message", columnDefinition = "TEXT")
 	private String errorMessage; //"string"
 	
 	@Column(name="executable")
