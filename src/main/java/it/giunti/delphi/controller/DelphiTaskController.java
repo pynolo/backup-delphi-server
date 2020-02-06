@@ -47,6 +47,16 @@ public class DelphiTaskController {
     	taskService.modifyTask(task);
     }
  
+    @GetMapping("/api/viewtaskbyexecutable/{id}")
+    public DelphiTask viewTaskByExecutable(@PathVariable(value = "executable") String executable) {
+        return taskService.getTaskByExecutable(executable);
+    }
+    
+    @PutMapping("/api/changetaskdescription")
+    public void changeTaskDescription(@Valid @RequestBody DelphiTask task) {
+    	taskService.modifyTaskDescription(task.getExecutable(), task.getDescription());
+    }
+    
     @DeleteMapping("/api/removetask/{id}")
     public void removeTask(@PathVariable(value = "id") int id) {
     	taskService.removeTask(id);

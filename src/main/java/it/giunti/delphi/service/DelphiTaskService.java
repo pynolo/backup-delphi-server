@@ -36,11 +36,6 @@ public class DelphiTaskService {
         return taskDao.selectTaskById(id);
     }
     
-//    @Transactional
-//    public DelphiTask getTaskByName(String name) {
-//        return taskDao.selectTaskByName(name);
-//    }
-    
     @Transactional
     public DelphiTask addTask(DelphiTask task) {
     	return taskDao.insertTask(task);
@@ -50,7 +45,17 @@ public class DelphiTaskService {
     public DelphiTask modifyTask(DelphiTask task) {
         return taskDao.updateTask(task);
     }
- 
+    
+    @Transactional
+    public DelphiTask getTaskByExecutable(String executable) {
+        return taskDao.selectTaskByExecutable(executable);
+    }
+    
+    @Transactional
+    public DelphiTask modifyTaskDescription(String executable, String description) {
+        return taskDao.updateTaskDescription(executable, description);
+    }
+    
     @Transactional
     public List<DelphiTask> getAllAvailableTasks() {
         return taskDao.selectAllTasks(true);

@@ -54,6 +54,14 @@ public class DelphiTaskDao {
 		return task;
 	}
 
+	public DelphiTask updateTaskDescription(String executable, String description) {
+		DelphiTask task = selectTaskByExecutable(executable);
+		task.setDescription(description);
+		entityManager.merge(task);
+		entityManager.flush();
+		return task;
+	}
+	
 	public void deleteTask(int id) {
 		DelphiTask task = selectTaskById(id);
 		entityManager.merge(task);
