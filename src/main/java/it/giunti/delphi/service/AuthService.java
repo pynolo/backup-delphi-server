@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import it.giunti.delphi.model.dao.DelphiUserDao;
@@ -26,19 +27,26 @@ import it.giunti.delphi.model.entity.DelphiUser;
 public class AuthService {
 	private static final Logger LOG = LoggerFactory.getLogger(AuthService.class);
 	
-	private static final String LDAP_HOST = "ldap.intranet.giunti.it";
-	private static final String LDAP_DOMAIN = "giunti.it";
-	private static final String LDAP_BASE_DN = "dc=intranet,dc=giunti,dc=it";
-	private static final String LDAP_PRINCIPAL = "CN=Ricercheportale,OU=Utenti di Servizio,DC=intranet,DC=giunti,DC=it";
-	private static final String LDAP_CREDENTIAL = "x7ap2roj";
-	
-	private static final String ATTRIBUTE_FOR_USER = "sAMAccountName";
-	private static final String ATTRIBUTE_FOR_NAME = "cn";
-	private static final String ATTRIBUTE_FOR_MAIL = "mail";
-	
 	@Autowired
 	@Qualifier("delphiUserDao")
 	DelphiUserDao userDao;
+	
+	@Value("${giunti.ldap.host}")
+	private String ldapHost;
+	@Value("${giunti.ldap.domain}")
+	private String ldapDomain;
+	@Value("${giunti.ldap.baseDn}")
+	private String ldapBaseDn;
+	@Value("${giunti.ldap.principal}")
+	private String ldapPrincipal;
+	@Value("${giunti.ldap.credential}")
+	private String ldapCredential;
+	@Value("${giunti.ldap.attributeForUser}")
+	private String ldapAttributeForUser;
+	@Value("${giunti.ldap.attributeForName}")
+	private String ldapAttributeForName;
+	@Value("${giunti.ldap.attributeForMail}")
+	private String ldapAttributeForMail;
 	
 	@Transactional
 	public void authenticate(String username, String password) throws AuthenticationException {
@@ -51,7 +59,7 @@ public class AuthService {
 			Attributes att = null;
 			try {
 				att = authenticateLdapUser(username, password,
-						LDAP_DOMAIN, LDAP_HOST, LDAP_BASE_DN);
+						ldapDomain, ldapHost, ldapBaseDn);
 			} catch (NamingException e) {
 				LOG.debug(username+" non presente in ldap");
 				errorString = username+" non presente in ldap";
@@ -69,10 +77,11 @@ public class AuthService {
 		if (errorString != null) throw new AuthenticationException(errorString);
 	}
 
-	private static Attributes authenticateLdapUser(String userName, String password,
+	@Transactional
+	private Attributes authenticateLdapUser(String userName, String password,
 			String domain, String host, String baseDn) throws NamingException {
-		String returnedAtts[] = { ATTRIBUTE_FOR_USER, ATTRIBUTE_FOR_NAME, ATTRIBUTE_FOR_MAIL };
-		String searchFilter = "(&(objectClass=user)(" + ATTRIBUTE_FOR_USER
+		String returnedAtts[] = { ldapAttributeForUser, ldapAttributeForName, ldapAttributeForMail };
+		String searchFilter = "(&(objectClass=user)(" + ldapAttributeForUser
 				+ "=" + userName + "))";
 		Attributes result = null;
 		// Create the search controls
@@ -86,8 +95,8 @@ public class AuthService {
 		// Using standard Port, check your instalation
 		environment.put(Context.PROVIDER_URL, "ldap://" + host + ":389");
 		environment.put(Context.SECURITY_AUTHENTICATION, "simple");
-		environment.put(Context.SECURITY_PRINCIPAL, LDAP_PRINCIPAL);//username + "@" + domain);
-		environment.put(Context.SECURITY_CREDENTIALS, LDAP_CREDENTIAL);//password);
+		environment.put(Context.SECURITY_PRINCIPAL, ldapPrincipal);//username + "@" + domain);
+		environment.put(Context.SECURITY_CREDENTIALS, ldapCredential);//password);
 		LdapContext ldapCtx = null;
 		//Acquisisce il context
 		ldapCtx = new InitialLdapContext(environment, null);
