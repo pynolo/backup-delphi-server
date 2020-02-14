@@ -59,11 +59,11 @@ public class SapReplyLog {
 		this.jobName = jobName;
 	}
 
-	public String getzIdInterfaccia() {
+	public String getZIdInterfaccia() {
 		return zIdInterfaccia;
 	}
 
-	public void setzIdInterfaccia(String zIdInterfaccia) {
+	public void setZIdInterfaccia(String zIdInterfaccia) {
 		this.zIdInterfaccia = zIdInterfaccia;
 	}
 
@@ -75,19 +75,19 @@ public class SapReplyLog {
 		this.bpid = bpid;
 	}
 
-	public String getzIdRecord() {
+	public String getZIdRecord() {
 		return zIdRecord;
 	}
 
-	public void setzIdRecord(String zIdRecord) {
+	public void setZIdRecord(String zIdRecord) {
 		this.zIdRecord = zIdRecord;
 	}
 
-	public String getzIdRef() {
+	public String getZIdRef() {
 		return zIdRef;
 	}
 
-	public void setzIdRef(String zIdRef) {
+	public void setZIdRef(String zIdRef) {
 		this.zIdRef = zIdRef;
 	}
 
@@ -123,11 +123,11 @@ public class SapReplyLog {
 		this.row = row;
 	}
 
-	public String getsData() {
+	public String getSData() {
 		return sData;
 	}
 
-	public void setsData(String sData) {
+	public void setSData(String sData) {
 		this.sData = sData;
 	}
 
