@@ -1,12 +1,13 @@
 package it.giunti.delphi;
 
 public enum SapReplyTypeEnum {
-	POINTER("Y"),
-	INFORMATIVE("I"),
+
 	ERROR("E"),
-	WARNING("W"),
+	INFORMATIVE("I"),
 	SUCCESS("S"),
-	Z("Z");
+	WARNING("W"),
+	POINTER("Y"),
+	MANUAL("Z");
 	
 	private final String typeString;
 	

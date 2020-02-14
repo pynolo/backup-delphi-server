@@ -18,8 +18,8 @@ public class SapReplyLogDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	// Master: type = S, E, W
-	// Filtered master: type = E, W
+	// Master: type = S, E, W, I, Z
+	// Filtered master: type = E, W, I, Z
 	
 	@SuppressWarnings("unchecked")
 	public List<SapReplyLog> findFilteredMasterByDate(Date startDatetime, Date finishDatetime, int maxResults) {
@@ -27,12 +27,12 @@ public class SapReplyLogDao {
 				"from SapReplyLog as srl where " +
 				"srl.dtDataAcq > :t1 and " +
 				"srl.dtDataAcq < :t2 and " +
-				"(type = :s1 or type = :s2) order by srl.idLog")
+				"type != :s1 and type != :s2 order by srl.idLog")
 				.setMaxResults(maxResults)
 				.setParameter("t1", startDatetime)
 				.setParameter("t2", finishDatetime)
-				.setParameter("s1", SapReplyTypeEnum.ERROR.getTypeString())
-				.setParameter("s2", SapReplyTypeEnum.WARNING.getTypeString());
+				.setParameter("s1", SapReplyTypeEnum.POINTER.getTypeString())
+				.setParameter("s2", SapReplyTypeEnum.SUCCESS.getTypeString());
 		List<SapReplyLog> resultList = (List<SapReplyLog>) query.getResultList();
 		return resultList;
 	}
