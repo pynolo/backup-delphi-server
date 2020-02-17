@@ -22,7 +22,8 @@ public class SapReplyLogDao {
 	// Filtered master: type = E, W, I, Z
 	
 	@SuppressWarnings("unchecked")
-	public List<SapReplyLog> findFilteredMasterByDate(Date startDatetime, Date finishDatetime, int maxResults) {
+	public List<SapReplyLog> findFilteredMasterByDate(Date startDatetime, Date finishDatetime,
+			int maxResults, String username) {
 		Query query = entityManager.createQuery(
 				"from SapReplyLog as srl where " +
 				"srl.dtDataAcq > :t1 and " +
@@ -33,6 +34,7 @@ public class SapReplyLogDao {
 				.setParameter("t2", finishDatetime)
 				.setParameter("s1", SapReplyTypeEnum.POINTER.getTypeString())
 				.setParameter("s2", SapReplyTypeEnum.SUCCESS.getTypeString());
+		//TODO filter by username
 		List<SapReplyLog> resultList = (List<SapReplyLog>) query.getResultList();
 		return resultList;
 	}

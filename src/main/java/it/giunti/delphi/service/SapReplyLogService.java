@@ -22,8 +22,10 @@ public class SapReplyLogService {
 	SapReplyLogDao srlDao;
 	
 	@Transactional
-	public List<SapReplyLog> findFilteredMasterByDate(Date startDatetime, Date finishDatetime, int maxResults) {
-		List<SapReplyLog> resultList = srlDao.findFilteredMasterByDate(startDatetime, finishDatetime, maxResults);
+	public List<SapReplyLog> findFilteredMasterByDate(Date startDatetime, Date finishDatetime,
+			int maxResults, String username) {
+		List<SapReplyLog> resultList = srlDao.findFilteredMasterByDate(
+				startDatetime, finishDatetime, maxResults, username);
 		if (resultList != null) {
 			if (resultList.size() > 0) return resultList;
 		}

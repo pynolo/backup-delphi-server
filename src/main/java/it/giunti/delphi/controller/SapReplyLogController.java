@@ -26,7 +26,7 @@ public class SapReplyLogController {
 	@PostMapping("/api/findsapfilteredmaster")
 	public List<SapReplyLog> findSapFilteredMaster(@Valid @RequestBody SapMasterSearchBean bean) {
 		List<SapReplyLog> resultList = srlService.findFilteredMasterByDate(
-				bean.getStartDatetime(), bean.getFinishDatetime(), bean.getMaxResults());
+				bean.getStartDatetime(), bean.getFinishDatetime(), bean.getMaxResults(), bean.getUsername());
 		return resultList;
 	}
 
@@ -40,10 +40,17 @@ public class SapReplyLogController {
 	// INNER CLASSES
 
 	public static class SapMasterSearchBean {
+		private String username;
 		private Date startDatetime;
 		private Date finishDatetime;
 		private int maxResults;
 		
+		public String getUsername() {
+			return username;
+		}
+		public void setUsername(String username) {
+			this.username = username;
+		}
 		public Date getStartDatetime() {
 			return startDatetime;
 		}
