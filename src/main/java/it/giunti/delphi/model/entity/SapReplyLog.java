@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -14,17 +16,18 @@ import javax.persistence.TemporalType;
 public class SapReplyLog {
 
 	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_")
-	private String idLog;
-	@Column(name = "jobName")
+	private int idLog;
+	@Column(name = "jobname")
 	private String jobName;
-	@Column(name = "zIdInterfaccia")
+	@Column(name = "zidinterfaccia")
 	private String zIdInterfaccia;
 	@Column(name = "bpid")
 	private String bpid;
-	@Column(name = "zIdRecord")
+	@Column(name = "zidrecord")
 	private String zIdRecord;
-	@Column(name = "zIdRef")
+	@Column(name = "zidref")
 	private String zIdRef;
 	@Column(name = "type")
 	private String type;
@@ -34,20 +37,20 @@ public class SapReplyLog {
 	private String parameter;
 	@Column(name = "row")
 	private Integer row;
-	@Column(name = "sData")
+	@Column(name = "sdata")
 	private String sData;
-	@Column(name = "dtDataAcq")
+	@Column(name = "dtdataacq")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dtDataAcq;
-	@Column(name = "dtDataMod")
+	@Column(name = "dtdatamod")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dtDataMod;
-
-	public String getIdLog() {
+	
+	public int getIdLog() {
 		return idLog;
 	}
 
-	public void setIdLog(String idLog) {
+	public void setIdLog(int idLog) {
 		this.idLog = idLog;
 	}
 
