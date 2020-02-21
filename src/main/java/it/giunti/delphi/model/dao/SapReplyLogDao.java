@@ -63,7 +63,7 @@ public class SapReplyLogDao {
 		List<SapReplyLog> queryList = (List<SapReplyLog>) query.getResultList();
 		SapReplyMasterBean lastMaster = new SapReplyMasterBean();
 		for (SapReplyLog replyLog:queryList) {
-			if (replyLog.getType().equals(SapReplyTypeEnum.POINTER)) {
+			if (replyLog.getType().equals(SapReplyTypeEnum.POINTER.getTypeString())) {
 				//IS Y? => Add to all corresponding rows as a sublevel (level 3)
 				addPointerRow(hierarchicList, replyLog);
 			} else {
@@ -73,6 +73,7 @@ public class SapReplyLogDao {
 			//Add new master if new
 			if (!hierarchicList.contains(lastMaster)) hierarchicList.add(lastMaster);
 		}
+		adjustCounts(hierarchicList);
 		return hierarchicList;
 	}
 	private SapReplyMasterBean addToHierarchy(List<SapReplyMasterBean> hierarchicList, 
@@ -89,7 +90,6 @@ public class SapReplyLogDao {
 		} else {
 			//Create a new master with first detail row (self)
 			lastMaster = new SapReplyMasterBean(replyLog);
-			lastMaster.setDetailList(new ArrayList<SapReplyDetailBean>());
 			lastMaster.getDetailList().add(new SapReplyDetailBean(replyLog));
 		}
 		return lastMaster;
@@ -100,13 +100,24 @@ public class SapReplyLogDao {
 			for (SapReplyDetailBean detail:master.getDetailList()) {
 				if (detail.getZIdRecord().equals(detail.getZIdRef())) {
 					//Add to subList
-					if (detail.getSubList() == null) detail.setSubList(new ArrayList<SapReplyLog>());
 					detail.getSubList().add(replyLog);
 				}
 			}
 		}
 	}
-	
+	private void adjustCounts(List<SapReplyMasterBean> hierarchicList) {
+		int masterRowCount = 0;
+		for (SapReplyMasterBean master:hierarchicList) {
+			masterRowCount = 0;
+			for (SapReplyDetailBean detail:master.getDetailList()) {
+				int detailRowCount = 1;
+				detailRowCount += detail.getSubList().size();
+				masterRowCount += detailRowCount;
+				detail.setRowCount(detailRowCount);
+			}
+			master.setRowCount(masterRowCount);
+		}
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<SapReplyLog> findByRefAndBpid(String zIdRef, String bpid) {

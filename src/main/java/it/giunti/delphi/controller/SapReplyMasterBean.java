@@ -8,11 +8,13 @@ import it.giunti.delphi.model.entity.SapReplyLog;
 
 public class SapReplyMasterBean {
 	
+	private int idLog;
 	private String jobName;
 	private String bpid;
 	private String type;
 	private String message;
 	private Date dtDataAcq;
+	private int rowCount = 0;
 	private List<SapReplyDetailBean> detailList = new ArrayList<SapReplyDetailBean>();
 
 	public SapReplyMasterBean() {
@@ -20,7 +22,7 @@ public class SapReplyMasterBean {
 	}
 	
 	public SapReplyMasterBean(SapReplyLog replyLog) {
-		//this.setIdLog(replyLog.getIdLog());
+		this.setIdLog(replyLog.getIdLog());
 		this.setJobName(replyLog.getJobName());
 		//this.setZIdInterfaccia(replyLog.getZIdInterfaccia());
 		this.setBpid(replyLog.getBpid());
@@ -33,6 +35,14 @@ public class SapReplyMasterBean {
 		//this.setSData(replyLog.getSData());
 		this.setDtDataAcq(replyLog.getDtDataAcq());
 		//this.setDtDataMod(replyLog.getDtDataMod());
+	}
+
+	public int getIdLog() {
+		return idLog;
+	}
+
+	public void setIdLog(int idLog) {
+		this.idLog = idLog;
 	}
 
 	public String getJobName() {
@@ -73,6 +83,14 @@ public class SapReplyMasterBean {
 
 	public void setDtDataAcq(Date dtDataAcq) {
 		this.dtDataAcq = dtDataAcq;
+	}
+
+	public int getRowCount() {
+		return rowCount;
+	}
+
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
 	}
 
 	public List<SapReplyDetailBean> getDetailList() {

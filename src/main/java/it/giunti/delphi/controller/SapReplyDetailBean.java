@@ -7,6 +7,7 @@ import it.giunti.delphi.model.entity.SapReplyLog;
 
 public class SapReplyDetailBean extends SapReplyLog {
 
+	private int rowCount = 0;
 	private List<SapReplyLog> subList = new ArrayList<SapReplyLog>();
 
 	public SapReplyDetailBean() {
@@ -35,6 +36,14 @@ public class SapReplyDetailBean extends SapReplyLog {
 
 	public void setSubList(List<SapReplyLog> subList) {
 		this.subList = subList;
+	}
+
+	public int getRowCount() {
+		return rowCount;
+	}
+
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
 	}
 	
 }
