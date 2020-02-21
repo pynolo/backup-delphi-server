@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import it.giunti.delphi.controller.SapReplyMasterBean;
 import it.giunti.delphi.model.dao.SapReplyLogDao;
-import it.giunti.delphi.model.entity.SapReplyLog;
 
 @Service("sapReplyLogService")
 public class SapReplyLogService {
@@ -22,24 +22,24 @@ public class SapReplyLogService {
 	SapReplyLogDao srlDao;
 	
 	@Transactional
-	public List<SapReplyLog> findFilteredMasterByDate(Date startDatetime, Date finishDatetime,
-			int maxResults, String username) {
-		List<SapReplyLog> resultList = srlDao.findFilteredMasterByDate(
-				startDatetime, finishDatetime, maxResults, username);
+	public List<SapReplyMasterBean> findSapHierarchicLogByDate(Date startDatetime, Date finishDatetime,
+			Integer maxResults, Boolean showSuccess, String username) {
+		List<SapReplyMasterBean> resultList = srlDao.findSapHierarchicLogByDate(
+				startDatetime, finishDatetime, maxResults, showSuccess, username);
 		if (resultList != null) {
 			if (resultList.size() > 0) return resultList;
 		}
 		
-		return new ArrayList<SapReplyLog>();
+		return new ArrayList<SapReplyMasterBean>();
 	}
 	
-	@Transactional
-	public List<SapReplyLog> findByRefAndBpid(String zIdRef, String bpid) {
-		List<SapReplyLog> resultList = srlDao.findByRefAndBpid(zIdRef, bpid);
-		if (resultList != null) {
-			if (resultList.size() > 0) return resultList;
-		}
-		
-		return new ArrayList<SapReplyLog>();
-	}
+	//@Transactional
+	//public List<SapReplyLog> findByRefAndBpid(String zIdRef, String bpid) {
+	//	List<SapReplyLog> resultList = srlDao.findByRefAndBpid(zIdRef, bpid);
+	//	if (resultList != null) {
+	//		if (resultList.size() > 0) return resultList;
+	//	}
+	//	
+	//	return new ArrayList<SapReplyLog>();
+	//}
 }
