@@ -54,7 +54,7 @@ public class SapReplyLogDao {
 				"from SapReplyLog as srl where " +
 				"srl.dtDataAcq > :t1 and " +
 				"srl.dtDataAcq < :t2 and " + filter +
-				"order by srl.idLog")
+				"order by srl.idLog desc")
 				.setMaxResults(maxResults)
 				.setParameter("t1", startDatetime)
 				.setParameter("t2", finishDatetime);
@@ -63,15 +63,20 @@ public class SapReplyLogDao {
 		List<SapReplyLog> queryList = (List<SapReplyLog>) query.getResultList();
 		SapReplyMasterBean lastMaster = new SapReplyMasterBean();
 		for (SapReplyLog replyLog:queryList) {
-			if (replyLog.getType().equals(SapReplyTypeEnum.POINTER.getTypeString())) {
-				//IS Y? => Add to all corresponding rows as a sublevel (level 3)
-				addPointerRow(hierarchicList, replyLog);
-			} else {
+			if (!replyLog.getType().equals(SapReplyTypeEnum.POINTER.getTypeString())) {
 				//NOT Y? => Create a 2-level hierarchy
 				lastMaster = addToHierarchy(hierarchicList, replyLog, lastMaster);
 			}
 			//Add new master if new
-			if (!hierarchicList.contains(lastMaster)) hierarchicList.add(lastMaster);
+			if (!hierarchicList.contains(lastMaster) && !(lastMaster.getType() == null)) {
+				hierarchicList.add(lastMaster);
+			}
+		}
+		for (SapReplyLog replyLog:queryList) {
+			if (replyLog.getType().equals(SapReplyTypeEnum.POINTER.getTypeString())) {
+				//IS Y? => Add to all corresponding rows as a sublevel (level 3)
+				addPointerRow(hierarchicList, replyLog);
+			}
 		}
 		adjustCounts(hierarchicList);
 		return hierarchicList;
@@ -98,7 +103,7 @@ public class SapReplyLogDao {
 			SapReplyLog replyLog) {
 		for (SapReplyMasterBean master:hierarchicList) {
 			for (SapReplyDetailBean detail:master.getDetailList()) {
-				if (detail.getZIdRecord().equals(detail.getZIdRef())) {
+				if (detail.getZIdRecord().equalsIgnoreCase(replyLog.getZIdRef())) {
 					//Add to subList
 					detail.getSubList().add(replyLog);
 				}
@@ -124,7 +129,7 @@ public class SapReplyLogDao {
 		Query query = entityManager.createQuery(
 				"from SapReplyLog as srl where " +
 				"srl.zIdRef = :s1 and " +
-				"srl.bpid = :s2 order by srl.idLog")
+				"srl.bpid = :s2 order by srl.idLog desc")
 				.setParameter("s1", zIdRef)
 				.setParameter("s2", bpid);
 		List<SapReplyLog> resultList = (List<SapReplyLog>) query.getResultList();
