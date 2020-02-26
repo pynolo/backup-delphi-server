@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.giunti.delphi.ControllerException;
-import it.giunti.delphi.model.dao.DelphiUserDao;
 import it.giunti.delphi.model.entity.DelphiUser;
 import it.giunti.delphi.service.AuthService;
+import it.giunti.delphi.service.DelphiUserService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -25,8 +25,8 @@ public class AuthController {
     @Qualifier("authService")
     private AuthService authService;
 	@Autowired
-	@Qualifier("delphiUserDao")
-	private DelphiUserDao userDao;
+	@Qualifier("delphiUserService")
+	private DelphiUserService userService;
 	
     @PostMapping("/api/authenticate")
     public DelphiUser authenticate(@Valid @RequestBody LinkedHashMap<String, String> paramsMap) throws ControllerException {
@@ -34,7 +34,7 @@ public class AuthController {
     		String username = paramsMap.get("username");
     		String password = paramsMap.get("password");
 			authService.authenticate(username, password);
-			DelphiUser user = userDao.selectUserByUsername(username);
+			DelphiUser user = userService.getUserByUsername(username);
 			return user;
 		} catch (AuthenticationException e) {
 			throw new ControllerException(e.getMessage(), e);
