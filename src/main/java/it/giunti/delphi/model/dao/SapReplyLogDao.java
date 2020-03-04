@@ -43,24 +43,33 @@ public class SapReplyLogDao {
 	
 	// Interroga SAP e aggrega le informazioni in modo gerarchico
 	@SuppressWarnings("unchecked")
-	public List<SapReplyMasterBean> findSapHierarchicLogByDate(Date startDatetime, Date finishDatetime,
-			Integer maxResults, Boolean showSuccess, String username) {
+	public List<SapReplyMasterBean> findSapHierarchicLogByDate(Boolean showSuccess, String username,
+			Date startDatetime, Date finishDatetime,
+			Integer maxResults, String taskName) {
 		List<SapReplyMasterBean> hierarchicList = new ArrayList<SapReplyMasterBean>();
 		if (maxResults == null) maxResults = 1000;
 		if (showSuccess == null) showSuccess = false;
 		String filter = "";
-		if (!showSuccess) filter = "type != :s1 ";
+		if (!showSuccess) filter += "and srl.type != :s1 ";
+		if (taskName != null) {
+			if (taskName.length() > 2) filter += "and srl.jobName = :s2 ";
+		}
 		Query query = entityManager.createQuery(
 				"from SapReplyLog as srl where " +
 				"srl.dtDataAcq > :t1 and " +
-				"srl.dtDataAcq < :t2 and " + filter +
+				"srl.dtDataAcq < :t2 " + 
+				filter +
 				"order by srl.idLog desc")
 				.setMaxResults(maxResults)
 				.setParameter("t1", startDatetime)
 				.setParameter("t2", finishDatetime);
 		if (!showSuccess) query.setParameter("s1", SapReplyTypeEnum.SUCCESS.getTypeString());
+		if (taskName != null) {
+			if (taskName.length() > 2) query.setParameter("s2", taskName);
+		}
 		//TODO filter by username
 		List<SapReplyLog> queryList = (List<SapReplyLog>) query.getResultList();
+		//Create hierarchy
 		SapReplyMasterBean lastMaster = new SapReplyMasterBean();
 		for (SapReplyLog replyLog:queryList) {
 			if (!replyLog.getType().equals(SapReplyTypeEnum.POINTER.getTypeString())) {

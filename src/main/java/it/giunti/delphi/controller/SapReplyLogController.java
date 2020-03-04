@@ -24,8 +24,8 @@ public class SapReplyLogController {
 
 	@PostMapping("/api/findsaphierarchiclog")
 	public List<SapReplyMasterBean> findSapHierarchicLogByDate(@Valid @RequestBody SapSearchBean bean) {
-		List<SapReplyMasterBean> resultList = srlService.findSapHierarchicLogByDate(
-				bean.getStartDatetime(), bean.getFinishDatetime(), bean.getMaxResults(), bean.getShowSuccess(), bean.getUsername());
+		List<SapReplyMasterBean> resultList = srlService.findSapHierarchicLogByDate(bean.getShowSuccess(), bean.getUsername(),
+				bean.getStartDatetime(), bean.getFinishDatetime(), bean.getMaxResults(), bean.getTaskName());
 		return resultList;
 	}
 
@@ -39,11 +39,12 @@ public class SapReplyLogController {
 	// INNER CLASSES
 
 	public static class SapSearchBean {
+		private Boolean showSuccess;
 		private String username;
 		private Date startDatetime;
 		private Date finishDatetime;
-		private Boolean showSuccess;
 		private Integer maxResults;
+		private String taskName;
 		
 		public String getUsername() {
 			return username;
@@ -62,6 +63,12 @@ public class SapReplyLogController {
 		}
 		public void setFinishDatetime(Date finishDatetime) {
 			this.finishDatetime = finishDatetime;
+		}
+		public String getTaskName() {
+			return taskName;
+		}
+		public void setTaskName(String taskName) {
+			this.taskName = taskName;
 		}
 		public Boolean getShowSuccess() {
 			return showSuccess;

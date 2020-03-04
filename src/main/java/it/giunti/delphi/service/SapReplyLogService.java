@@ -22,10 +22,11 @@ public class SapReplyLogService {
 	SapReplyLogDao srlDao;
 	
 	@Transactional
-	public List<SapReplyMasterBean> findSapHierarchicLogByDate(Date startDatetime, Date finishDatetime,
-			Integer maxResults, Boolean showSuccess, String username) {
-		List<SapReplyMasterBean> resultList = srlDao.findSapHierarchicLogByDate(
-				startDatetime, finishDatetime, maxResults, showSuccess, username);
+	public List<SapReplyMasterBean> findSapHierarchicLogByDate(Boolean showSuccess, String username,
+			Date startDatetime, Date finishDatetime,
+			Integer maxResults, String taskName) {
+		List<SapReplyMasterBean> resultList = srlDao.findSapHierarchicLogByDate(showSuccess, username,
+				startDatetime, finishDatetime, maxResults, taskName);
 		if (resultList != null) {
 			if (resultList.size() > 0) return resultList;
 		}
