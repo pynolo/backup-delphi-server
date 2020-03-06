@@ -2,17 +2,22 @@ package it.giunti.delphi.model.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import it.giunti.delphi.SapReplyTypeEnum;
 import it.giunti.delphi.controller.SapReplyDetailBean;
 import it.giunti.delphi.controller.SapReplyMasterBean;
+import it.giunti.delphi.model.entity.DelphiTask;
 import it.giunti.delphi.model.entity.SapReplyLog;
 
 @Repository("sapReplyLogDao")
@@ -20,26 +25,10 @@ public class SapReplyLogDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-
-	// Master: type = S, E, W, I, Z
-	// Filtered master: type = E, W, I, Z
-	
-	//@SuppressWarnings("unchecked")
-	//public List<SapReplyLog> findFilteredMasterByDate(Date startDatetime, Date finishDatetime,
-	//		int maxResults, String username) {
-	//	Query query = entityManager.createQuery(
-	//			"from SapReplyLog as srl where " +
-	//			"srl.dtDataAcq > :t1 and " +
-	//			"srl.dtDataAcq < :t2 and " +
-	//			"type != :s1 and type != :s2 order by srl.idLog")
-	//			.setMaxResults(maxResults)
-	//			.setParameter("t1", startDatetime)
-	//			.setParameter("t2", finishDatetime)
-	//			.setParameter("s1", SapReplyTypeEnum.POINTER.getTypeString())
-	//			.setParameter("s2", SapReplyTypeEnum.SUCCESS.getTypeString());
-	//	List<SapReplyLog> resultList = (List<SapReplyLog>) query.getResultList();
-	//	return resultList;
-	//}
+    @Autowired
+    @Qualifier("delphiTaskDao")
+    private DelphiTaskDao taskDao;
+ 
 	
 	// Interroga SAP e aggrega le informazioni in modo gerarchico
 	@SuppressWarnings("unchecked")
@@ -51,8 +40,12 @@ public class SapReplyLogDao {
 		if (showSuccess == null) showSuccess = false;
 		String filter = "";
 		if (!showSuccess) filter += "and srl.type != :s1 ";
-		if (taskName != null) {
-			if (taskName.length() > 2) filter += "and srl.jobName = :s2 ";
+		if (taskName == null) taskName = "";
+		if (username == null) username = "";
+		if (taskName.length() > 2) {
+			filter += "and srl.jobName = :s2 ";
+		} else {
+			if (username.length() > 2) filter += "and srl.jobName in (:names) ";
 		}
 		Query query = entityManager.createQuery(
 				"from SapReplyLog as srl where " +
@@ -64,10 +57,18 @@ public class SapReplyLogDao {
 				.setParameter("t1", startDatetime)
 				.setParameter("t2", finishDatetime);
 		if (!showSuccess) query.setParameter("s1", SapReplyTypeEnum.SUCCESS.getTypeString());
-		if (taskName != null) {
-			if (taskName.length() > 2) query.setParameter("s2", taskName);
+		if (taskName.length() > 2) {
+			query.setParameter("s2", taskName);
+		} else {
+			if (username.length() > 2) {
+				List<DelphiTask> taskList = taskDao.selectAllTasksByUser(username);
+				if (taskList.size() > 0) {
+					Set<String> nameSet = new HashSet<String>();
+					for (DelphiTask task:taskList) nameSet.add(task.getName());
+					query.setParameter("names", nameSet);
+				}
+			}
 		}
-		//TODO filter by username
 		List<SapReplyLog> queryList = (List<SapReplyLog>) query.getResultList();
 		//Create hierarchy
 		SapReplyMasterBean lastMaster = new SapReplyMasterBean();
