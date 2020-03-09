@@ -54,4 +54,7 @@ CREATE TABLE `delphi_user_task` (
   UNIQUE KEY `ix_user_task` (`username`, `executable`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0;
 
+## Indice su Sap Log
+
+CREATE INDEX `gge_sapreplyidx` ON `gge_sapreplymessages4business`(`dtdataacq`, `type`, `jobname`);
 
