@@ -27,3 +27,4 @@ target
 #netbeans project folder
 nbproject
 
+/bin/
